@@ -1,4 +1,4 @@
-package com.ironhack.pauescolabank.enums.account;
+package com.ironhack.pauescolabank.enums;
 
 public enum AccountStatus {
     ACTIVE,

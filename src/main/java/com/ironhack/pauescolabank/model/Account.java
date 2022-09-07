@@ -1,45 +1,43 @@
 package com.ironhack.pauescolabank.model;
 
 import com.ironhack.pauescolabank.embedded.Balance;
-import com.ironhack.pauescolabank.embedded.Fee;
-import com.ironhack.pauescolabank.embedded.InterestRate;
-import com.ironhack.pauescolabank.enums.account.AccountStatus;
-import com.ironhack.pauescolabank.enums.account.AccountType;
+import com.ironhack.pauescolabank.embedded.Money;
+import com.ironhack.pauescolabank.enums.AccountStatus;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-public class Account {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+ public abstract class Account {
     @Id
     private Long id;
     private String secretKey;
     @ManyToOne
     private AccountHolder owner;
-    //todo Aquest crec que s'hauria de fer amb lo d'embedable??
-    //private AccountHolder secondaryOwner;
-    @Embedded
-    private List<Fee> fees;
+   //todo fer lo dels atributs overrides si cal
+    /* @OneToOne
+    private AccountHolder secondaryOwner;*/
     @Enumerated
     private AccountStatus accountStatus;
     @Embedded
-    private Balance balance;
-    @Embedded
-    private InterestRate interest;
-    @Enumerated
-    private AccountType accountType;
+    private Money balance;
     @OneToOne
     private HistoryLog log;
-    @CreationTimestamp
-    private Instant createdAt;
+   @CreationTimestamp
+   private Instant createdAt;
+   @UpdateTimestamp
+   private Instant lastUpdateTime;
+
+    abstract public void doMaintenance();
 
 }

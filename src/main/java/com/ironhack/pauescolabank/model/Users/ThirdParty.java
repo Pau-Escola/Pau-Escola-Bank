@@ -13,6 +13,6 @@ import java.util.HashMap;
 @Getter
 @Setter
 public class ThirdParty extends User {
-    //todo que faig aqui???
-    private HashMap<String,Long> clientList;
+    //todo aquest es un altre json que s'haura de passar a hashmap, tindrá el num de compte extern i el client a qui va associat
+    private String clientAccountJson;
 }

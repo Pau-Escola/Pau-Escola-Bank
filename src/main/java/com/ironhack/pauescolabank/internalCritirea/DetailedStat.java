@@ -1,4 +1,4 @@
-package com.ironhack.pauescolabank.internal;
+package com.ironhack.pauescolabank.internalCritirea;
 
 public class DetailedStat implements LogStatistic {
 private DecissionMakingInfo decissionMakingInfo;

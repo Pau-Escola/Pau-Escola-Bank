@@ -7,7 +7,5 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Balance {
     private Money balance;
-    private HistoryLog moneyMovement;
-    private Money minimumBalance;
-    private Money debt;
+
 }

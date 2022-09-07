@@ -1,8 +1,11 @@
 package com.ironhack.pauescolabank.embedded;
 
-public class MonthlyManteinanceFee implements Fee {
-    private Money amount;
+import javax.persistence.Embeddable;
+import java.math.BigDecimal;
 
+@Embeddable
+public class MonthlyManteinanceFee implements Fee {
+    private BigDecimal monthlyMaintenanceFee;
     @Override
     public void apply() {
 
