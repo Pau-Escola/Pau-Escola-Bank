@@ -1,6 +1,7 @@
 package com.ironhack.pauescolabank.model.Users;
 
 import com.ironhack.pauescolabank.model.HistoryLog;
+import com.ironhack.pauescolabank.model.Order;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,4 +31,6 @@ public abstract class User {
     private Instant createdAt;
     @UpdateTimestamp
     private Instant lastUpdateTime;
+    @OneToMany
+    private List<Order> pendingOrders;
 }

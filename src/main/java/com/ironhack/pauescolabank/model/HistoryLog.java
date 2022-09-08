@@ -1,7 +1,10 @@
 package com.ironhack.pauescolabank.model;
 
+import com.ironhack.pauescolabank.DTO.HistoryLogDTO;
 import com.ironhack.pauescolabank.enums.LogType;
 import com.ironhack.pauescolabank.model.Users.User;
+import com.ironhack.pauescolabank.utilities.LogJsonFormatter;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,14 +13,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class HistoryLog {
     @Id
     @GeneratedValue
@@ -32,4 +33,16 @@ public class HistoryLog {
     private Instant createdAt;
     @UpdateTimestamp
     private Instant lastUpdateTime;
+    @OneToOne
+    private Order order;
+
+    public HistoryLog fromDTO(HistoryLogDTO log) {
+        LogJsonFormatter logJsonFormatter = new LogJsonFormatter();
+        HistoryLog logEntity = new HistoryLog();
+       logEntity.setLogInJson(logJsonFormatter.toEntity(log.getLogInJsonFormatted()));
+       logEntity.setLogType(log.getLogType());
+       logEntity.setOrder(order.fromDTO(log.getOrderDTO()));
+
+       return logEntity;
+    }
 }

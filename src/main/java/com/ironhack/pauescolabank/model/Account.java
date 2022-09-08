@@ -1,6 +1,5 @@
 package com.ironhack.pauescolabank.model;
 
-import com.ironhack.pauescolabank.embedded.Balance;
 import com.ironhack.pauescolabank.embedded.Money;
 import com.ironhack.pauescolabank.enums.AccountStatus;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
@@ -20,6 +19,7 @@ import java.time.Instant;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
  public abstract class Account {
     @Id
+    @GeneratedValue
     private Long id;
     private String secretKey;
     @ManyToOne

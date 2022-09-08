@@ -1,22 +1,20 @@
-package com.ironhack.pauescolabank.embedded;
+package com.ironhack.pauescolabank.DTO;
 
-import lombok.AllArgsConstructor;
+import com.ironhack.pauescolabank.embedded.Address;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Address {
+public class AccountHolderDTO {
+
+    private String name;
+    private String password;
+    private String email;
     private String country;
     private String city;
     private Integer zipCode;
     private String street;
-
-
 }
