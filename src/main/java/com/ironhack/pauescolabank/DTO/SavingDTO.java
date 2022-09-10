@@ -21,16 +21,27 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SavingDTO {
+public class SavingDTO extends AccountDTO {
 
-    private String secretKey;
-    private AccountHolder owner;
-    private AccountStatus accountStatus;
-    private Money balance;
-    private HistoryLogDTO log;
+
     private PenaltyFee penaltyFee;
     private double interestRate;
     private BigDecimal minimumBalance;
+
+    public SavingDTO(
+            String secretKey,
+            AccountHolder owner,
+            AccountStatus accountStatus,
+            Money balance,
+            HistoryLogDTO log,
+            PenaltyFee penaltyFee,
+            double interestRate,
+            BigDecimal minimumBalance) {
+        super(secretKey, owner, accountStatus, balance, log);
+        setPenaltyFee(penaltyFee);
+        setInterestRate(interestRate);
+        setMinimumBalance(minimumBalance);
+    }
 
     public SavingDTO fromEntity(Saving saving){
         SavingDTO savingDTO = new SavingDTO(
@@ -38,7 +49,7 @@ public class SavingDTO {
                 saving.getOwner(),
                 saving.getAccountStatus(),
                 saving.getBalance(),
-                log.fromEntity(saving.getLog()),
+                this.getLog().fromEntity(saving.getLog()),
                 saving.getPenaltyFee(),
                 saving.getInterestRate(),
                 saving.getMinimumBalance()

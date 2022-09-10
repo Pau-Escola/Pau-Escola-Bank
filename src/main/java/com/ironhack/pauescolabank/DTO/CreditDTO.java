@@ -18,26 +18,39 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CreditDTO {
+public class CreditDTO extends AccountDTO {
 
-    private String secretKey;
-    private AccountHolder owner;
-    private AccountStatus accountStatus;
-    private Money balance;
-    private HistoryLogDTO log;
+
     private PenaltyFee penaltyFee;
     private double interestRate;
     private BigDecimal moneyOwed;
     private BigDecimal creditLimit;
 
+    public CreditDTO(
+            String secretKey,
+            AccountHolder owner,
+            AccountStatus accountStatus,
+            Money balance,
+            HistoryLogDTO log,
+            PenaltyFee penaltyFee,
+            double interestRate,
+            BigDecimal moneyOwed,
+            BigDecimal creditLimit) {
+        super(secretKey, owner, accountStatus, balance, log);
+        setPenaltyFee(penaltyFee);
+        setInterestRate(interestRate);
+        setMoneyOwed(moneyOwed);
+        setCreditLimit(creditLimit);
+    }
 
-    public CreditDTO fromEntity(Credit credit){
+
+    public CreditDTO fromEntity(Credit credit) {
         CreditDTO creditDTO = new CreditDTO(
                 credit.getSecretKey(),
                 credit.getOwner(),
                 credit.getAccountStatus(),
                 credit.getBalance(),
-                log.fromEntity(credit.getLog()),
+                this.getLog().fromEntity(credit.getLog()),
                 credit.getPenaltyFee(),
                 credit.getInterestRate(),
                 credit.getMoneyOwed(),
