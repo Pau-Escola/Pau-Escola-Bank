@@ -1,7 +1,10 @@
 package com.ironhack.pauescolabank.controllers;
 
 import com.ironhack.pauescolabank.DTO.OrderDTO;
+import com.ironhack.pauescolabank.enums.AccountStatus;
+import com.ironhack.pauescolabank.enums.OrderStatus;
 import com.ironhack.pauescolabank.model.Order;
+import com.ironhack.pauescolabank.model.Saving;
 import com.ironhack.pauescolabank.services.OrderService;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,4 +34,10 @@ public class OrderController {
         return orderService.save(orderDTO);
     }
     //todo pensar si implementem lopcio desborrar la orderi deixar nomes elhistorylog
+
+    @PatchMapping("/update_status/{id}")
+    public Order updateNamePatch(@PathVariable Long id,
+                                  @RequestBody OrderStatus status){
+        return orderService.updateStatus(id, status);
+    }
 }

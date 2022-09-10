@@ -17,10 +17,13 @@ import lombok.Setter;
 public abstract class AccountDTO {
 
     private String secretKey;
-    private AccountHolder owner;
+    private Long owner_id;
     private AccountStatus accountStatus;
     private Money balance;
-    private HistoryLogDTO log;
 
-
+    public AccountDTO(String secretKey, AccountStatus accountStatus, Money balance) {
+        this.secretKey = secretKey;
+        this.accountStatus = accountStatus;
+        this.balance = balance;
+    }
 }

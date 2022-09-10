@@ -30,26 +30,38 @@ public class SavingDTO extends AccountDTO {
 
     public SavingDTO(
             String secretKey,
-            AccountHolder owner,
+            Long owner_id,
             AccountStatus accountStatus,
             Money balance,
-            HistoryLogDTO log,
             PenaltyFee penaltyFee,
             double interestRate,
             BigDecimal minimumBalance) {
-        super(secretKey, owner, accountStatus, balance, log);
+        super(secretKey, owner_id, accountStatus, balance);
         setPenaltyFee(penaltyFee);
         setInterestRate(interestRate);
         setMinimumBalance(minimumBalance);
     }
 
+    public SavingDTO(
+            String secretKey,
+            AccountStatus accountStatus,
+            Money balance,
+            PenaltyFee penaltyFee,
+            double interestRate,
+            BigDecimal minimumBalance) {
+        super(secretKey, accountStatus, balance);
+        setPenaltyFee(penaltyFee);
+        setInterestRate(interestRate);
+        setMinimumBalance(minimumBalance);
+    }
+
+
     public SavingDTO fromEntity(Saving saving){
         SavingDTO savingDTO = new SavingDTO(
                 saving.getSecretKey(),
-                saving.getOwner(),
+                saving.getOwner().getId(),
                 saving.getAccountStatus(),
                 saving.getBalance(),
-                this.getLog().fromEntity(saving.getLog()),
                 saving.getPenaltyFee(),
                 saving.getInterestRate(),
                 saving.getMinimumBalance()

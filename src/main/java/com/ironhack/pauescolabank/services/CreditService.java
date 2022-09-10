@@ -2,6 +2,7 @@ package com.ironhack.pauescolabank.services;
 
 import com.ironhack.pauescolabank.DTO.CreditDTO;
 import com.ironhack.pauescolabank.model.Credit;
+import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import com.ironhack.pauescolabank.repositories.CreditRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,18 +13,21 @@ import java.util.List;
 @Service
 public class CreditService {
     CreditRepository creditRepository;
+    AccountHolderService accountHolderService;
 
-    public CreditService(CreditRepository creditRepository) {
+    public CreditService(CreditRepository creditRepository, AccountHolderService accountHolderService) {
         this.creditRepository = creditRepository;
+        this.accountHolderService = accountHolderService;
     }
 
     public List<Credit> findAll() {
         return creditRepository.findAll();
     }
 
-    public Credit save(CreditDTO creditDTO) {
+    public Credit save(CreditDTO creditDTO, Long id) {
         Credit credit = new Credit();
-        return creditRepository.save(credit.fromDTO(creditDTO));
+        AccountHolder accountHolder = accountHolderService.getById(id);
+        return creditRepository.save(credit.fromDTO(creditDTO, accountHolder));
     }
 
     public String delete(Long id) {

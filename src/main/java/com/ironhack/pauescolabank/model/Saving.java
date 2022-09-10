@@ -1,9 +1,8 @@
 package com.ironhack.pauescolabank.model;
 
-import com.ironhack.pauescolabank.DTO.CreditDTO;
 import com.ironhack.pauescolabank.DTO.SavingDTO;
-import com.ironhack.pauescolabank.embedded.Money;
 import com.ironhack.pauescolabank.embedded.PenaltyFee;
+import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,13 +25,12 @@ public class Saving extends Account {
 
 
     //todo mirar si puc fer algo per evitar duplicacions en el codi
-    public Saving fromDTO(SavingDTO savingDTO){
+    public Saving fromDTO(SavingDTO savingDTO, AccountHolder accountHolder){
         Saving saving = new Saving();
         saving.setSecretKey(savingDTO.getSecretKey());
-        saving.setOwner(savingDTO.getOwner());
+        saving.setOwner(accountHolder);
         saving.setAccountStatus(savingDTO.getAccountStatus());
         saving.setBalance(savingDTO.getBalance());
-        saving.setLog(getLog().fromDTO(savingDTO.getLog()));
         saving.setPenaltyFee(savingDTO.getPenaltyFee());
         saving.setInterestRate(savingDTO.getInterestRate());
         saving.setMinimumBalance(savingDTO.getMinimumBalance());

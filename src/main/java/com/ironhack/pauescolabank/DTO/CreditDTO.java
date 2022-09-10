@@ -28,15 +28,30 @@ public class CreditDTO extends AccountDTO {
 
     public CreditDTO(
             String secretKey,
-            AccountHolder owner,
+            Long owner_id,
             AccountStatus accountStatus,
             Money balance,
-            HistoryLogDTO log,
             PenaltyFee penaltyFee,
             double interestRate,
             BigDecimal moneyOwed,
             BigDecimal creditLimit) {
-        super(secretKey, owner, accountStatus, balance, log);
+        super(secretKey, owner_id, accountStatus, balance);
+        setPenaltyFee(penaltyFee);
+        setInterestRate(interestRate);
+        setMoneyOwed(moneyOwed);
+        setCreditLimit(creditLimit);
+    }
+
+    public CreditDTO(
+            String secretKey,
+
+            AccountStatus accountStatus,
+            Money balance,
+            PenaltyFee penaltyFee,
+            double interestRate,
+            BigDecimal moneyOwed,
+            BigDecimal creditLimit) {
+        super(secretKey, accountStatus, balance);
         setPenaltyFee(penaltyFee);
         setInterestRate(interestRate);
         setMoneyOwed(moneyOwed);
@@ -47,10 +62,9 @@ public class CreditDTO extends AccountDTO {
     public CreditDTO fromEntity(Credit credit) {
         CreditDTO creditDTO = new CreditDTO(
                 credit.getSecretKey(),
-                credit.getOwner(),
+                credit.getOwner().getId(),
                 credit.getAccountStatus(),
                 credit.getBalance(),
-                this.getLog().fromEntity(credit.getLog()),
                 credit.getPenaltyFee(),
                 credit.getInterestRate(),
                 credit.getMoneyOwed(),

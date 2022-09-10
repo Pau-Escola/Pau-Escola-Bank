@@ -27,27 +27,38 @@ public class CheckingDTO extends AccountDTO {
 
     public CheckingDTO(
             String secretKey,
-            AccountHolder owner,
+            Long owner_id,
             AccountStatus accountStatus,
             Money balance,
-            HistoryLogDTO log,
             PenaltyFee penaltyFee,
             MonthlyManteinanceFee monthlyManteinanceFee,
             BigDecimal minimumBalance) {
-        super(secretKey, owner, accountStatus, balance, log);
+        super(secretKey, owner_id, accountStatus, balance);
+        setPenaltyFee(penaltyFee);
+        setMonthlyManteinanceFee(monthlyManteinanceFee);
+        setMinimumBalance(minimumBalance);
+    }
+
+    public CheckingDTO(
+            String secretKey,
+            AccountStatus accountStatus,
+            Money balance,
+            PenaltyFee penaltyFee,
+            MonthlyManteinanceFee monthlyManteinanceFee,
+            BigDecimal minimumBalance) {
+        super(secretKey, accountStatus, balance);
         setPenaltyFee(penaltyFee);
         setMonthlyManteinanceFee(monthlyManteinanceFee);
         setMinimumBalance(minimumBalance);
     }
 
 
-    public CheckingDTO fromEntity(Checking checking){
+    public CheckingDTO fromEntity(Checking checking) {
         CheckingDTO checkingDTO = new CheckingDTO(
                 checking.getSecretKey(),
-                checking.getOwner(),
+                checking.getOwner().getId(),
                 checking.getAccountStatus(),
                 checking.getBalance(),
-                this.getLog().fromEntity(checking.getLog()),
                 checking.getPenaltyFee(),
                 checking.getMonthlyManteinanceFee(),
                 checking.getMinimumBalance()

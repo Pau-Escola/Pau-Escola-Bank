@@ -34,4 +34,20 @@ public class AccountHolderController {
         return accountHolderService.delete(id);
     }
 
+    @PutMapping("/edit_whole/{id}")
+    public AccountHolder updatePut(@PathVariable Long id, @RequestBody AccountHolder accountHolder){
+        return accountHolderService.updatePut(id, accountHolder);
+    }
+
+    @PatchMapping("/update_status/{id}")
+    public Checking updateNamePatch(@PathVariable Long id,
+                                    @RequestBody AccountStatus status){
+        return checkingService.updateStatus(id, status);
+    }
+    @PatchMapping("/update_balance/{id}")
+    public Checking updateNamePatch(@PathVariable Long id,
+                                    @RequestBody Money money){
+        return checkingService.updateBalance(id, money);
+    }
+
 }

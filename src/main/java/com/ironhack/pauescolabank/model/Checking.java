@@ -6,6 +6,7 @@ import com.ironhack.pauescolabank.embedded.Fee;
 import com.ironhack.pauescolabank.embedded.Money;
 import com.ironhack.pauescolabank.embedded.MonthlyManteinanceFee;
 import com.ironhack.pauescolabank.embedded.PenaltyFee;
+import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,13 +29,12 @@ public class Checking extends Account {
 
     private BigDecimal minimumBalance;
 
-    public Checking fromDTO(CheckingDTO checkingDTO){
+    public Checking fromDTO(CheckingDTO checkingDTO, AccountHolder accountHolder){
         Checking checking = new Checking();
         checking.setSecretKey(checkingDTO.getSecretKey());
-        checking.setOwner(checkingDTO.getOwner());
+        checking.setOwner(accountHolder);
         checking.setAccountStatus(checkingDTO.getAccountStatus());
         checking.setBalance(checkingDTO.getBalance());
-        checking.setLog(getLog().fromDTO(checkingDTO.getLog()));
         checking.setPenaltyFee(checkingDTO.getPenaltyFee());
         checking.setMonthlyManteinanceFee(checkingDTO.getMonthlyManteinanceFee());
         checking.setMinimumBalance(checkingDTO.getMinimumBalance());
