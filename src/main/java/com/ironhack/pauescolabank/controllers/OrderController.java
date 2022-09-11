@@ -36,7 +36,7 @@ public class OrderController {
     //todo pensar si implementem lopcio desborrar la orderi deixar nomes elhistorylog
 
     @PatchMapping("/update_status/{id}")
-    public Order updateNamePatch(@PathVariable Long id,
+    public Order updateStatus(@PathVariable Long id,
                                   @RequestBody OrderStatus status){
         return orderService.updateStatus(id, status);
     }

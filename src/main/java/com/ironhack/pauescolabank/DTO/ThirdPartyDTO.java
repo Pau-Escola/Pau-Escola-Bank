@@ -19,7 +19,7 @@ public class ThirdPartyDTO {
     private String password;
     private String clientAccountJson;
 
-    public ThirdPartyDTO fromDTO(ThirdParty thirdParty){
+    public ThirdPartyDTO fromEntity(ThirdParty thirdParty){
         ClientAccountJsonFormatter clientAccountJsonFormatter = new ClientAccountJsonFormatter();
         ThirdPartyDTO thirdPartyDTO = new ThirdPartyDTO();
         thirdPartyDTO.setName(thirdParty.getName());

@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 public class Credit extends Account {
     @Embedded
     private PenaltyFee penaltyFee;
-    private double interestRate;
+    private Double interestRate;
     private BigDecimal moneyOwed;
     private BigDecimal creditLimit;
 

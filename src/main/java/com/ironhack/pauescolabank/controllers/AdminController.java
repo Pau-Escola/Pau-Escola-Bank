@@ -35,7 +35,7 @@ public class AdminController {
         return adminService.delete(id);
     }
 
-    @PutMapping("/edit_whole/{id}")
+    /*@PutMapping("/edit_whole/{id}")
     public Admin updatePut(@PathVariable Long id, @RequestBody Admin admin){
         return adminService.updatePut(id, admin);
     }
@@ -44,5 +44,5 @@ public class AdminController {
     public Vegetable updateNamePatch(@PathVariable Long id,
                                      @RequestBody AuthorisationLevel authorisationLevel){
         return adminService.updateAuthorisationLevel(id, authorisationLevel);
-    }
+    }*/
 }

@@ -40,17 +40,17 @@ public class CreditController {
     }
 
     @PutMapping("/edit_whole/{id}")
-    public Credit updatePut(@PathVariable Long id, @RequestBody Credit credit){
-        return creditService.updatePut(id, credit);
+    public Credit updateAll(@PathVariable Long id, @RequestBody Credit credit){
+        return creditService.updateAll(id, credit);
     }
 
     @PatchMapping("/update_status/{id}")
-    public Credit updateNamePatch(@PathVariable Long id,
+    public CreditDTO updateStatus(@PathVariable Long id,
                                     @RequestBody AccountStatus status){
         return creditService.updateStatus(id, status);
     }
     @PatchMapping("/update_balance/{id}")
-    public Credit updateNamePatch(@PathVariable Long id,
+    public CreditDTO updateBalance(@PathVariable Long id,
                                     @RequestBody Money money){
         return creditService.updateBalance(id, money);
     }

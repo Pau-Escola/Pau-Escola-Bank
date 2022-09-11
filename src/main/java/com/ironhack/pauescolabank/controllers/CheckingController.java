@@ -43,17 +43,17 @@ public class CheckingController  {
     }
 
     @PutMapping("/edit_whole/{id}")
-    public Checking updatePut(@PathVariable Long id, @RequestBody Checking checking){
-        return checkingService.updatePut(id, checking);
+    public Checking updateAll(@PathVariable Long id, @RequestBody Checking checking){
+        return checkingService.updateAll(id, checking);
     }
 
     @PatchMapping("/update_status/{id}")
-    public Checking updateNamePatch(@PathVariable Long id,
+    public CheckingDTO updateStatus(@PathVariable Long id,
                                      @RequestBody AccountStatus status){
         return checkingService.updateStatus(id, status);
     }
     @PatchMapping("/update_balance/{id}")
-    public Checking updateNamePatch(@PathVariable Long id,
+    public CheckingDTO updateBalance(@PathVariable Long id,
                                      @RequestBody Money money){
         return checkingService.updateBalance(id, money);
     }

@@ -1,6 +1,7 @@
 package com.ironhack.pauescolabank.services;
 
 import com.ironhack.pauescolabank.DTO.OrderDTO;
+import com.ironhack.pauescolabank.enums.OrderStatus;
 import com.ironhack.pauescolabank.model.Order;
 import com.ironhack.pauescolabank.repositories.OrderRepository;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,16 @@ public class OrderService {
     public Order getById(Long id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "There's no Order with id: " + id));
+                        "There's no Order with id: " + id));
+    }
+
+    public Order updateStatus(Long id, OrderStatus status) {
+        var order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "There's no Order with id: " + id));
+
+        order.setOrderStatus(status);
+        return orderRepository.save(order);
+
     }
 }

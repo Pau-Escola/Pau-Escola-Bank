@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 public class Saving extends Account {
     @Embedded
     private PenaltyFee penaltyFee;
-    private double interestRate;
+    private Double interestRate;
     private BigDecimal minimumBalance;
 
 

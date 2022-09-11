@@ -1,6 +1,8 @@
 package com.ironhack.pauescolabank.controllers;
 
 import com.ironhack.pauescolabank.DTO.AccountHolderDTO;
+import com.ironhack.pauescolabank.embedded.Address;
+import com.ironhack.pauescolabank.model.Account;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import com.ironhack.pauescolabank.services.AccountHolderService;
 import org.springframework.web.bind.annotation.*;
@@ -34,20 +36,20 @@ public class AccountHolderController {
         return accountHolderService.delete(id);
     }
 
-    @PutMapping("/edit_whole/{id}")
-    public AccountHolder updatePut(@PathVariable Long id, @RequestBody AccountHolder accountHolder){
-        return accountHolderService.updatePut(id, accountHolder);
-    }
+   /* @PutMapping("/edit_whole/{id}")
+    public AccountHolder updateAll(@PathVariable Long id, @RequestBody AccountHolder accountHolder){
+        return accountHolderService.updateAll(id, accountHolder);
+    }*/
 
-    @PatchMapping("/update_status/{id}")
-    public Checking updateNamePatch(@PathVariable Long id,
-                                    @RequestBody AccountStatus status){
-        return checkingService.updateStatus(id, status);
+    @PatchMapping("/update_address/{id}")
+    public AccountHolderDTO updateAddress(@PathVariable Long id,
+                                          @RequestBody Address address){
+        return accountHolderService.updateAddress(id, address);
     }
-    @PatchMapping("/update_balance/{id}")
-    public Checking updateNamePatch(@PathVariable Long id,
-                                    @RequestBody Money money){
-        return checkingService.updateBalance(id, money);
-    }
+   /* @PatchMapping("/add_account/{user_id}")
+    public List<Account> addAccount(@PathVariable Long user_id,
+                                         @RequestBody Long account_id{
+        return accountHolderService.addAccount(user_id, account_id);
+    }*/
 
 }

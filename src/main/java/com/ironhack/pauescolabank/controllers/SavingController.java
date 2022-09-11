@@ -40,17 +40,17 @@ public class SavingController {
     }
 
     @PutMapping("/edit_whole/{id}")
-    public Saving updatePut(@PathVariable Long id, @RequestBody Saving saving){
-        return savingService.updatePut(id, saving);
+    public Saving updateAll(@PathVariable Long id, @RequestBody Saving saving){
+        return savingService.updateAll(id, saving);
     }
 
     @PatchMapping("/update_status/{id}")
-    public Saving updateStatusPatch(@PathVariable Long id,
+    public SavingDTO updateStatus(@PathVariable Long id,
                                     @RequestBody AccountStatus status){
         return savingService.updateStatus(id, status);
     }
     @PatchMapping("/update_balance/{id}")
-    public Saving updateBalancePatch(@PathVariable Long id,
+    public SavingDTO updateBalance(@PathVariable Long id,
                                     @RequestBody Money money){
         return savingService.updateBalance(id, money);
     }
