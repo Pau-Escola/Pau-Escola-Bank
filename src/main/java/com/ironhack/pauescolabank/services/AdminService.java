@@ -34,4 +34,10 @@ public class AdminService {
                                 "There's no Admin with id: " + id)));
         return "Admin with id: " + id + " has been removed from the database";
     }
+
+    public Admin findById(Long id) {
+        return adminRepository.findById(id).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "There's no Admin with id: " + id));
+    }
 }

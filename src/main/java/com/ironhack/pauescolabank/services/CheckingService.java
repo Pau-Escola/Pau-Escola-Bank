@@ -6,6 +6,7 @@ import com.ironhack.pauescolabank.enums.AccountStatus;
 import com.ironhack.pauescolabank.model.Checking;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import com.ironhack.pauescolabank.repositories.CheckingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,6 +18,7 @@ public class CheckingService {
     CheckingRepository checkingRepository;
     AccountHolderService accountHolderService;
 
+    @Autowired
     public CheckingService(CheckingRepository checkingRepository, AccountHolderService accountHolderService) {
         this.checkingRepository = checkingRepository;
         this.accountHolderService = accountHolderService;

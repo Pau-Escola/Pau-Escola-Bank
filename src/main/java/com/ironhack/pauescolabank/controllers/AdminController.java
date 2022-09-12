@@ -25,6 +25,11 @@ public class AdminController {
         return adminService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Admin getById(@PathVariable Long id){
+        return adminService.findById(id);
+    }
+
     @PostMapping
     public Admin create(@RequestBody Admin admin){
         return adminService.save(admin);
