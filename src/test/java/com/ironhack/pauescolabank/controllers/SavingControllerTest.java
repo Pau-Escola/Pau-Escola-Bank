@@ -1,15 +1,15 @@
 package com.ironhack.pauescolabank.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ironhack.pauescolabank.DTO.CheckingDTO;
+import com.ironhack.pauescolabank.DTO.SavingDTO;
 import com.ironhack.pauescolabank.embedded.Address;
 import com.ironhack.pauescolabank.embedded.Money;
 import com.ironhack.pauescolabank.enums.AccountStatus;
 import com.ironhack.pauescolabank.model.Account;
-import com.ironhack.pauescolabank.model.Checking;
+import com.ironhack.pauescolabank.model.Saving;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import com.ironhack.pauescolabank.repositories.AccountHolderRepository;
-import com.ironhack.pauescolabank.repositories.CheckingRepository;
+import com.ironhack.pauescolabank.repositories.SavingRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,36 +21,34 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-class CheckingControllerTest {
+class SavingControllerTest {
 
     WebApplicationContext webApplicationContext;
 
-    CheckingRepository checkingRepository;
+    SavingRepository savingRepository;
 
     AccountHolderRepository accountHolderRepository;
     private MockMvc mockMvc;
     private Account account;
     private AccountHolder accountHolder;
 
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    public CheckingControllerTest(
+    public SavingControllerTest(
             WebApplicationContext webApplicationContext,
-            CheckingRepository checkingRepository,
+            SavingRepository savingRepository,
             AccountHolderRepository accountHolderRepository) {
         this.webApplicationContext = webApplicationContext;
-        this.checkingRepository = checkingRepository;
+        this.savingRepository = savingRepository;
         this.accountHolderRepository = accountHolderRepository;
 
     }
@@ -58,33 +56,34 @@ class CheckingControllerTest {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders
-            .webAppContextSetup(webApplicationContext)
-            .build();
+                .webAppContextSetup(webApplicationContext)
+                .build();
         var addressTest = new Address("Spain", "Reus", 43204, "Raval de Robuster");
         var accountHolderTest = new AccountHolder(LocalDate.of(1997,03,23),addressTest, "test@gmail.com",95.2, null);
         accountHolderTest.setName("Paulo");
         accountHolder = accountHolderRepository.save(accountHolderTest);
         var money = new Money("€", BigDecimal.valueOf(700));
-        var checkingToTest = new Checking();
-        checkingToTest.setSecretKey("ES7521004586");
-        checkingToTest.setAccountStatus(AccountStatus.ACTIVE);
-        checkingToTest.setBalance(money);
-        checkingToTest.setOwner(accountHolderTest);
-        account = checkingRepository.save(checkingToTest);
+        var savingToTest = new Saving();
+        savingToTest.setSecretKey("ES7521004586");
+        savingToTest.setAccountStatus(AccountStatus.ACTIVE);
+        savingToTest.setBalance(money);
+        savingToTest.setOwner(accountHolderTest);
+        savingToTest.setInterestRate(4.5);
+        account = savingRepository.save(savingToTest);
 
 
     }
 
     @AfterEach
     void tearDown() {
-        checkingRepository.deleteAll();
+        savingRepository.deleteAll();
 
     }
 
     @Test
     void getAll() throws Exception {
         var result = mockMvc
-                .perform(get("/api/v1/accounts/checkings"))
+                .perform(get("/api/v1/accounts/savings"))
                 .andExpect(status().isOk()) // check status code 200
                 .andReturn();
 
@@ -94,7 +93,7 @@ class CheckingControllerTest {
     @Test
     void getById() throws Exception {
         var result = mockMvc
-                .perform(get("/api/v1/accounts/checkings/{id}" , account.getId()))
+                .perform(get("/api/v1/accounts/savings/{id}" , account.getId()))
                 .andExpect(status().isOk()) // check status code 200
                 .andReturn();
 
@@ -104,12 +103,12 @@ class CheckingControllerTest {
     @Test
     void create() throws Exception {
         var money = new Money("€", BigDecimal.valueOf(700));
-        var checkingToTest2 = new CheckingDTO(
-                "ES75210046", AccountStatus.ACTIVE, money, null, null, BigDecimal.valueOf(700) );
+        var savingToTest2 = new SavingDTO(
+                "ES75210046", AccountStatus.ACTIVE, money, null, 4.0, BigDecimal.valueOf(700) );
 
         var result = mockMvc
-                .perform(post("/api/v1/accounts/checkings/{id}", accountHolder.getId())
-                        .content(asJsonString(checkingToTest2))
+                .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())
+                        .content(asJsonString(savingToTest2))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // check status code 200
@@ -121,7 +120,7 @@ class CheckingControllerTest {
     @Test
     void delete() throws Exception {
         var result = mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/v1/accounts/checkings/{id}" , account.getId()))
+                .perform(MockMvcRequestBuilders.delete("/api/v1/accounts/savings/{id}" , account.getId()))
                 .andExpect(status().isOk()) // check status code 200
                 .andReturn();
 
@@ -131,14 +130,14 @@ class CheckingControllerTest {
     @Test
     void updateAll() throws Exception {
         var money = new Money("€", BigDecimal.valueOf(700));
-        var checkingToTest2 = new Checking();
-        checkingToTest2.setSecretKey("ES210046");
-        checkingToTest2.setAccountStatus(AccountStatus.FROZEN);
-        checkingToTest2.setBalance(money);
+        var savingToTest2 = new Saving();
+        savingToTest2.setSecretKey("ES210046");
+        savingToTest2.setAccountStatus(AccountStatus.FROZEN);
+        savingToTest2.setBalance(money);
 
         var result = mockMvc
-                .perform(put("/api/v1/accounts/checkings/edit_whole/{id}", account.getId())
-                        .content(asJsonString(checkingToTest2))
+                .perform(put("/api/v1/accounts/savings/edit_whole/{id}", account.getId())
+                        .content(asJsonString(savingToTest2))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // check status code 200
@@ -151,7 +150,7 @@ class CheckingControllerTest {
     void updateStatus() throws Exception {
         var statusTotest = AccountStatus.FROZEN;
         var result = mockMvc
-                .perform(patch("/api/v1/accounts/checkings/update_status/{id}", account.getId())
+                .perform(patch("/api/v1/accounts/savings/update_status/{id}", account.getId())
                         .content(asJsonString(statusTotest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -165,7 +164,7 @@ class CheckingControllerTest {
     void updateBalance() throws Exception {
         var balanceTotest = new Money("$",BigDecimal.valueOf(45000));
         var result = mockMvc
-                .perform(patch("/api/v1/accounts/checkings/update_balance/{id}", account.getId())
+                .perform(patch("/api/v1/accounts/savings/update_balance/{id}", account.getId())
                         .content(asJsonString(balanceTotest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -181,4 +180,5 @@ class CheckingControllerTest {
             throw new RuntimeException(e);
         }
     }
+
 }

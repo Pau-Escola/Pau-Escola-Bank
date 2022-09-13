@@ -8,6 +8,7 @@ import com.ironhack.pauescolabank.model.Credit;
 import com.ironhack.pauescolabank.model.Saving;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import com.ironhack.pauescolabank.repositories.CreditRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,6 +20,7 @@ public class CreditService {
     CreditRepository creditRepository;
     AccountHolderService accountHolderService;
 
+    @Autowired
     public CreditService(CreditRepository creditRepository, AccountHolderService accountHolderService) {
         this.creditRepository = creditRepository;
         this.accountHolderService = accountHolderService;
