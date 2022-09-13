@@ -9,12 +9,11 @@ import javax.persistence.Embeddable;
 import java.math.BigDecimal;
 
 @Embeddable
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class PenaltyFee implements Fee {
-    private BigDecimal penaltyFee;
+public final class PenaltyFee implements Fee {
+    private final BigDecimal penaltyFee = BigDecimal.valueOf(40);
 
     @Override
     public void apply() {

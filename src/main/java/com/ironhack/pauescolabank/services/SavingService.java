@@ -80,8 +80,6 @@ public class SavingService {
             savingToUpdate.setAccountStatus(saving.getAccountStatus());
         if(saving.getBalance() != null)
             savingToUpdate.setBalance(saving.getBalance());
-        if(saving.getPenaltyFee() != null)
-            savingToUpdate.setPenaltyFee(saving.getPenaltyFee());
         if(saving.getInterestRate() != null)
             savingToUpdate.setInterestRate(saving.getInterestRate());
         if(saving.getMinimumBalance() != null)

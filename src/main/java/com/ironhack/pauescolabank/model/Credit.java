@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
 @Entity
-@NoArgsConstructor
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,13 +26,16 @@ public class Credit extends Account {
     private BigDecimal moneyOwed;
     private BigDecimal creditLimit;
 
+    public Credit() {
+        this.penaltyFee = new PenaltyFee();
+    }
+
     public Credit fromDTO(CreditDTO creditDTO, AccountHolder accountHolder){
         Credit credit = new Credit();
         credit.setSecretKey(creditDTO.getSecretKey());
         credit.setOwner(accountHolder);
         credit.setAccountStatus(creditDTO.getAccountStatus());
         credit.setBalance(creditDTO.getBalance());
-        credit.setPenaltyFee(creditDTO.getPenaltyFee());
         credit.setInterestRate(creditDTO.getInterestRate());
         credit.setMoneyOwed(creditDTO.getMoneyOwed());
         credit.setCreditLimit(creditDTO.getCreditLimit());

@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,6 +22,9 @@ public class Saving extends Account {
     private Double interestRate;
     private BigDecimal minimumBalance;
 
+    public Saving() {
+        this.penaltyFee = new PenaltyFee();
+    }
 
     //todo mirar si puc fer algo per evitar duplicacions en el codi
     public Saving fromDTO(SavingDTO savingDTO, AccountHolder accountHolder){
@@ -31,7 +33,6 @@ public class Saving extends Account {
         saving.setOwner(accountHolder);
         saving.setAccountStatus(savingDTO.getAccountStatus());
         saving.setBalance(savingDTO.getBalance());
-        saving.setPenaltyFee(savingDTO.getPenaltyFee());
         saving.setInterestRate(savingDTO.getInterestRate());
         saving.setMinimumBalance(savingDTO.getMinimumBalance());
 

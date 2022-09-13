@@ -76,12 +76,7 @@ public class CheckingService {
                 checkingToUpdate.setAccountStatus(checking.getAccountStatus());
             if(checking.getBalance() != null)
                 checkingToUpdate.setBalance(checking.getBalance());
-            if(checking.getPenaltyFee() != null)
-                checkingToUpdate.setPenaltyFee(checking.getPenaltyFee());
-            if(checking.getMonthlyManteinanceFee() != null)
-                checkingToUpdate.setMonthlyManteinanceFee(checking.getMonthlyManteinanceFee());
-            if(checking.getMinimumBalance() != null)
-                checkingToUpdate.setMinimumBalance(checking.getMinimumBalance());
+
 
             return checkingRepository.save(checkingToUpdate);
 

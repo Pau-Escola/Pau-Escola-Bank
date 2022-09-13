@@ -7,6 +7,7 @@ import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import com.ironhack.pauescolabank.services.AccountHolderService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class AccountHolderController {
         return accountHolderService.getById(id);
     }
     @PostMapping
-    public AccountHolder create(@RequestBody AccountHolderDTO accountHolderDTO){
+    public AccountHolder create(@RequestBody @Valid AccountHolderDTO accountHolderDTO){
         return accountHolderService.save(accountHolderDTO);
     }
 

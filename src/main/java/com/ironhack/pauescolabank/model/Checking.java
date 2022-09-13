@@ -16,7 +16,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 @Entity
-@NoArgsConstructor
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -27,7 +27,13 @@ public class Checking extends Account {
     private PenaltyFee penaltyFee;
     private boolean isLessThan25;
 
-    private BigDecimal minimumBalance;
+    private final BigDecimal minimumBalance = BigDecimal.valueOf(250);
+
+
+    public Checking() {
+    this.monthlyManteinanceFee = new MonthlyManteinanceFee();
+    this.penaltyFee = new PenaltyFee();
+    }
 
     public Checking fromDTO(CheckingDTO checkingDTO, AccountHolder accountHolder){
         Checking checking = new Checking();
@@ -35,9 +41,6 @@ public class Checking extends Account {
         checking.setOwner(accountHolder);
         checking.setAccountStatus(checkingDTO.getAccountStatus());
         checking.setBalance(checkingDTO.getBalance());
-        checking.setPenaltyFee(checkingDTO.getPenaltyFee());
-        checking.setMonthlyManteinanceFee(checkingDTO.getMonthlyManteinanceFee());
-        checking.setMinimumBalance(checkingDTO.getMinimumBalance());
 
         return checking;
     }

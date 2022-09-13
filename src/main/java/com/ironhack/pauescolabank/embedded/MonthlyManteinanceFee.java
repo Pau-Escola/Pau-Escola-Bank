@@ -9,12 +9,11 @@ import javax.persistence.Embeddable;
 import java.math.BigDecimal;
 
 @Embeddable
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class MonthlyManteinanceFee implements Fee {
-    private BigDecimal monthlyMaintenanceFee;
+public final class MonthlyManteinanceFee implements Fee {
+    private final BigDecimal monthlyMaintenanceFee = BigDecimal.valueOf(12);
     @Override
     public void apply() {
 
