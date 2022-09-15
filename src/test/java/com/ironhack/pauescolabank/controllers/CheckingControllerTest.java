@@ -61,8 +61,9 @@ class CheckingControllerTest {
             .webAppContextSetup(webApplicationContext)
             .build();
         var addressTest = new Address("Spain", "Reus", 43204, "Raval de Robuster");
-        var accountHolderTest = new AccountHolder(LocalDate.of(1997,03,23),addressTest, "test@gmail.com",95.2, null);
-        accountHolderTest.setName("Paulo");
+        var accountHolderTest = new AccountHolder("Paulo", "Ew4X5rT",
+                LocalDate.of(2000,03,23),
+                addressTest, "test@gmail.com", null);
         accountHolder = accountHolderRepository.save(accountHolderTest);
         var money = new Money("€", BigDecimal.valueOf(700));
         var checkingToTest = new Checking();

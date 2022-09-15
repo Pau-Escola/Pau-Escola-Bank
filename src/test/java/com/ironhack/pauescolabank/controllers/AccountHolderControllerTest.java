@@ -1,18 +1,14 @@
 package com.ironhack.pauescolabank.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ironhack.pauescolabank.DTO.AccountHolderDTO;
 import com.ironhack.pauescolabank.DTO.CreditDTO;
-import com.ironhack.pauescolabank.DTO.SavingDTO;
 import com.ironhack.pauescolabank.embedded.Address;
 import com.ironhack.pauescolabank.embedded.Money;
 import com.ironhack.pauescolabank.enums.AccountStatus;
-import com.ironhack.pauescolabank.model.Account;
 import com.ironhack.pauescolabank.model.Credit;
-import com.ironhack.pauescolabank.model.Saving;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import com.ironhack.pauescolabank.repositories.AccountHolderRepository;
-import com.ironhack.pauescolabank.repositories.CreditRepository;
-import com.ironhack.pauescolabank.repositories.SavingRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,31 +27,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @SpringBootTest
-class CreditControllerTest {
+class AccountHolderControllerTest {
+
     WebApplicationContext webApplicationContext;
-
-    CreditRepository creditRepository;
-
     AccountHolderRepository accountHolderRepository;
 
-    private Account account;
     private AccountHolder accountHolder;
     private MockMvc mockMvc;
 
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     @Autowired
-    public CreditControllerTest(
+    public AccountHolderControllerTest(
             WebApplicationContext webApplicationContext,
-            CreditRepository creditRepository,
             AccountHolderRepository accountHolderRepository) {
         this.webApplicationContext = webApplicationContext;
-        this.creditRepository = creditRepository;
         this.accountHolderRepository = accountHolderRepository;
-
     }
 
     @BeforeEach
@@ -66,67 +52,63 @@ class CreditControllerTest {
         var addressTest = new Address("Spain", "Reus", 43204, "Raval de Robuster");
         var accountHolderTest = new AccountHolder("Paulo", "Ew4X5rT",
                 LocalDate.of(2000,03,23),
-                addressTest, "test@gmail.com", null);;
+                addressTest, "test@gmail.com", null);
+
         accountHolder = accountHolderRepository.save(accountHolderTest);
-        var money = new Money("€", BigDecimal.valueOf(700));
-        var creditToTest = new Credit();
-        creditToTest.setSecretKey("ES7521004586");
-        creditToTest.setAccountStatus(AccountStatus.ACTIVE);
-        creditToTest.setBalance(money);
-        creditToTest.setOwner(accountHolderTest);
-        creditToTest.setInterestRate(4.5);
-        account=creditRepository.save(creditToTest);
+
 
 
     }
 
     @AfterEach
     void tearDown() {
-        creditRepository.deleteAll();
+        accountHolderRepository.deleteAll();
 
     }
 
     @Test
     void getAll() throws Exception {
         var result = mockMvc
-                .perform(get("/api/v1/accounts/credits"))
+                .perform(get("/api/v1/users/accountholders"))
                 .andExpect(status().isOk()) // check status code 200
                 .andReturn();
 
-        assertTrue(result.getResponse().getContentAsString().contains("ES7521004586"));
+        assertTrue(result.getResponse().getContentAsString().contains("Paulo"));
     }
 
     @Test
     void getById() throws Exception {
         var result = mockMvc
-                .perform(get("/api/v1/accounts/credits/{id}" , account.getId()))
+                .perform(get("/api/v1/users/accountholders/{id}" , accountHolder.getId()))
                 .andExpect(status().isOk()) // check status code 200
                 .andReturn();
 
-        assertTrue(result.getResponse().getContentAsString().contains("ES7521004586"));
+        assertTrue(result.getResponse().getContentAsString().contains("Paulo"));
     }
 
     @Test
     void create() throws Exception {
-        var money = new Money("€", BigDecimal.valueOf(700));
-        var creditToTest2 = new CreditDTO(
-                "ES75210046", AccountStatus.ACTIVE, money, null, 4.0, BigDecimal.valueOf(700), BigDecimal.valueOf(100) );
+
+        var newAccountHolder = new AccountHolderDTO(
+                "Roberto", "3xW5gJ@", "paulo@gmail.com",
+                "Spain", "Reus", 43205, "Raval Robusto 25",
+                2000, 05, 21);
 
         var result = mockMvc
-                .perform(post("/api/v1/accounts/credits/{id}", accountHolder.getId())
-                        .content(asJsonString(creditToTest2))
+                .perform(post("/api/v1/users/accountholders")
+                        .content(asJsonString(newAccountHolder))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // check status code 200
                 .andReturn();
 
-        assertTrue(result.getResponse().getContentAsString().contains("ES75210046"));
+        assertTrue(result.getResponse().getContentAsString().contains("Roberto"));
     }
 
     @Test
     void delete() throws Exception {
         var result = mockMvc
-                .perform(MockMvcRequestBuilders.delete("/api/v1/accounts/credits/{id}" , account.getId()))
+                .perform(MockMvcRequestBuilders.delete("/api/v1/users/accountholders/{id}" , accountHolder.getId()))
                 .andExpect(status().isOk()) // check status code 200
                 .andReturn();
 
@@ -134,51 +116,21 @@ class CreditControllerTest {
     }
 
     @Test
-    void updateAll() throws Exception {
-        var money = new Money("€", BigDecimal.valueOf(700));
-        var creditToTest2 = new Credit();
-        creditToTest2.setSecretKey("ES210046");
-        creditToTest2.setAccountStatus(AccountStatus.FROZEN);
-        creditToTest2.setBalance(money);
+    void updateAddress() throws Exception {
+        var newAddress = new Address("Italy", "Parma", 32456, "Paseo Marinno");
 
         var result = mockMvc
-                .perform(put("/api/v1/accounts/credits/edit_whole/{id}", account.getId())
-                        .content(asJsonString(creditToTest2))
+                .perform(patch("/api/v1/users/accountholders/update_address/{id}", accountHolder.getId())
+                        .content(asJsonString(newAddress))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // check status code 200
                 .andReturn();
 
-        assertTrue(result.getResponse().getContentAsString().contains("FROZEN"));
+        assertTrue(result.getResponse().getContentAsString().contains("Parma"));
     }
 
-    @Test
-    void updateStatus() throws Exception {
-        var statusTotest = AccountStatus.FROZEN;
-        var result = mockMvc
-                .perform(patch("/api/v1/accounts/credits/update_status/{id}", account.getId())
-                        .content(asJsonString(statusTotest))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()) // check status code 200
-                .andReturn();
 
-        assertTrue(result.getResponse().getContentAsString().contains("FROZEN"));
-    }
-
-    @Test
-    void updateBalance() throws Exception {
-        var balanceTotest = new Money("$",BigDecimal.valueOf(45000));
-        var result = mockMvc
-                .perform(patch("/api/v1/accounts/credits/update_balance/{id}", account.getId())
-                        .content(asJsonString(balanceTotest))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()) // check status code 200
-                .andReturn();
-
-        assertTrue(result.getResponse().getContentAsString().contains("45000"));
-    }
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
@@ -186,5 +138,42 @@ class CreditControllerTest {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    void shouldOnlyAcceptOver18() throws Exception {
+
+        var newAccountHolder = new AccountHolderDTO(
+                "Roberto", "3xW5gJ@", "paulo@gmail.com",
+                "Spain", "Reus", 43205, "Raval Robusto 25",
+                2020, 05, 21);
+
+        assertThrows(Exception.class, ()-> mockMvc
+                .perform(post("/api/v1/users/accountholders")
+                        .content(asJsonString(newAccountHolder))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn());
+
+
+    }
+
+    @Test
+    void shouldOnlyAcceptCorrectEmailFormat() throws Exception {
+
+        var newAccountHolder = new AccountHolderDTO(
+                "Roberto", "3xW5gJ@", "paulogmail.com",
+                "Spain", "Reus", 43205, "Raval Robusto 25",
+                2000, 05, 21);
+
+        assertThrows(Exception.class, ()-> mockMvc
+                .perform(post("/api/v1/users/accountholders")
+                        .content(asJsonString(newAccountHolder))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn());
+
+
+    }
+
 
 }

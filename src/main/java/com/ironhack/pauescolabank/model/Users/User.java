@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -33,4 +34,9 @@ public abstract class User {
     private Instant lastUpdateTime;
     @OneToMany
     private List<Order> pendingOrders;
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
 }

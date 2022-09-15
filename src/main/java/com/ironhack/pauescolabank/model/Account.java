@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 @Entity
@@ -23,6 +24,7 @@ import java.time.Instant;
     private Long id;
     private String secretKey;
     @ManyToOne
+    @NotNull
     private AccountHolder owner;
    //todo fer lo dels atributs overrides si cal
     /* @OneToOne

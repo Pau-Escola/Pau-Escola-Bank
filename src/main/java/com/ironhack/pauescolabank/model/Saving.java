@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ public class Saving extends Account {
     @Embedded
     private PenaltyFee penaltyFee;
     private Double interestRate;
+
     private BigDecimal minimumBalance;
 
     public Saving() {
