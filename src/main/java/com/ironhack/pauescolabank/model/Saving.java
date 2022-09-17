@@ -29,12 +29,16 @@ public class Saving extends Account {
     @Range(min=100, max = 1000)
     private BigDecimal minimumBalance;
     private LocalDate creationMoment;
+    private BigDecimal creditorNumber;
+    private LocalDate lastInterestPayment;
 
 
     public Saving() {
 
         this.penaltyFee = new PenaltyFee();
         this.creationMoment = LocalDate.now();
+        this.creditorNumber = BigDecimal.valueOf(0);
+        this.lastInterestPayment = creationMoment;
     }
 
     //todo mirar si puc fer algo per evitar duplicacions en el codi
@@ -43,33 +47,59 @@ public class Saving extends Account {
         saving.setSecretKey(savingDTO.getSecretKey());
         saving.setOwner(accountHolder);
         saving.setAccountStatus(savingDTO.getAccountStatus());
-        saving.setBalance(savingDTO.getBalance());
+        saving.updateBalance(savingDTO.getBalance().getMoney());
         saving.setInterestRate(savingDTO.getInterestRate());
         saving.setMinimumBalance(savingDTO.getMinimumBalance());
 
         return saving;
     }
+    public void updateBalance(BigDecimal bd){
+        int dayMultiplier = getDayCount(getBalance().getDateTracker().getDayOfYear());
+        creditorNumber = creditorNumber.add(bd.multiply(BigDecimal.valueOf(dayMultiplier)));
+        getBalance().setMoney(bd);
+    }
+
+    private int getDayCount(int dayOfYear) {
+        var newTimeTracker = LocalDate.now();
+
+        int count = newTimeTracker.getDayOfYear()- dayOfYear;
+
+        if(newTimeTracker.getYear() != getBalance().getDateTracker().getYear()){
+        count = 365 - dayOfYear + newTimeTracker.getDayOfYear();
+        }
+
+        getBalance().setDateTracker(newTimeTracker);
+        return count;
+
+    }
 
     @Override
     public void doMaintenance() {
 
-        if(isUnderMinimumBalance()) getBalance().getMoney().subtract(getPenaltyFee().getPenaltyFee());
-        if(itsTimeToAddMoney())
+        if(isUnderMinimumBalance()) applyPenaltyFee();
+        if(itsTimeToAddMoney()) doInterestAdding();
 
+    }
+
+    private BigDecimal applyPenaltyFee() {
+        return getBalance().getMoney().subtract(getPenaltyFee().getPenaltyFee());
     }
 
     public boolean itsTimeToAddMoney(){
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-        int creationYear = creationMoment.getYear();
-        int creationMonth = creationMoment.getMonthValue();
-        boolean isTrue = ((currentYear-creationYear == 1) && (currentMonth == creationMonth));
-
+        int lastUpdatedYear = lastInterestPayment.getYear();
+        int lastUpdatedMonth = lastInterestPayment.getMonthValue();
+        boolean isTrue = ((currentYear-lastUpdatedYear == 1) && (currentMonth == lastUpdatedMonth));
+        if (isTrue) lastInterestPayment = LocalDate.now();
         return isTrue;
     }
     public void doInterestAdding(){
-        BigDecimal interestGenerated = BigDecimal.valueOf(getBalance().getMoney().doubleValue()*this.interestRate);
-        getBalance().getMoney().add(interestGenerated);
+        int creditorNumberValue = creditorNumber.intValue()+ getBalance().getMoney().intValue()*getDayCount(LocalDate.now().getDayOfYear());
+        var moneyGenerated = BigDecimal.valueOf(creditorNumberValue*interestRate/365);
+        var totalMoney = getBalance().getMoney().add(moneyGenerated);
+        updateBalance(totalMoney);
+        this.creditorNumber = BigDecimal.valueOf(0);
     }
 
     public boolean isUnderMinimumBalance(){
