@@ -9,6 +9,7 @@ import com.ironhack.pauescolabank.model.Saving;
 import com.ironhack.pauescolabank.services.CreditService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class CreditController {
         return creditService.getById(id);
     }
     @PostMapping("/{id}")
-    public Credit create(@RequestBody CreditDTO creditDTO, @PathVariable Long id){
+    public Credit create(@RequestBody @Valid CreditDTO creditDTO, @PathVariable Long id){
         return creditService.save(creditDTO, id);
     }
 

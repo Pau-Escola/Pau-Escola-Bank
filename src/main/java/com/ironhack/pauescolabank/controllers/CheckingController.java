@@ -9,6 +9,7 @@ import com.ironhack.pauescolabank.model.Users.Admin;
 import com.ironhack.pauescolabank.services.CheckingService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class CheckingController  {
     }
 
     @PostMapping("/{id}")
-    public Checking create(@RequestBody CheckingDTO checkingDTO, @PathVariable Long id) {
+    public Checking create(@RequestBody @Valid CheckingDTO checkingDTO, @PathVariable Long id) {
         return checkingService.save(checkingDTO, id);
     }
 

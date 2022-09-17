@@ -14,6 +14,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 @Entity
 
@@ -44,8 +45,28 @@ public class Checking extends Account {
 
         return checking;
     }
+    public void checkAge(){
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int age = currentYear - this.getOwner().getBirthdate().getYear();
+        this.setLessThan25(age < 25);
+    }
     @Override
     public void doMaintenance() {
+        this.checkAge();
+        if(!this.isLessThan25){
+            getBalance().setMoney(
+                    getBalance().getMoney().subtract(
+                            getMonthlyManteinanceFee().getMonthlyMaintenanceFee()));
+            if(isUnderMinimumBalance())
+                getBalance().setMoney(
+                    getBalance().getMoney().subtract(
+                            getPenaltyFee().getPenaltyFee()));
+        }
 
+    }
+
+    public boolean isUnderMinimumBalance(){
+        boolean isTrue = getBalance().getMoney().intValue()< getMinimumBalance().intValue();
+        return isTrue ;
     }
 }

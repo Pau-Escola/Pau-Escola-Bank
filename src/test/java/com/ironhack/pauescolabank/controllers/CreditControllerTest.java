@@ -74,7 +74,7 @@ class CreditControllerTest {
         creditToTest.setAccountStatus(AccountStatus.ACTIVE);
         creditToTest.setBalance(money);
         creditToTest.setOwner(accountHolderTest);
-        creditToTest.setInterestRate(4.5);
+        creditToTest.setInterestRate(0.1);
         account=creditRepository.save(creditToTest);
 
 
@@ -110,7 +110,7 @@ class CreditControllerTest {
     void create() throws Exception {
         var money = new Money("€", BigDecimal.valueOf(700));
         var creditToTest2 = new CreditDTO(
-                "ES75210046", AccountStatus.ACTIVE, money, null, 4.0, BigDecimal.valueOf(700), BigDecimal.valueOf(100) );
+                "ES75210046", AccountStatus.ACTIVE, money, null, 0.2, BigDecimal.valueOf(700), BigDecimal.valueOf(100) );
 
         var result = mockMvc
                 .perform(post("/api/v1/accounts/credits/{id}", accountHolder.getId())
@@ -178,6 +178,40 @@ class CreditControllerTest {
                 .andReturn();
 
         assertTrue(result.getResponse().getContentAsString().contains("45000"));
+    }
+
+    @Test
+    void shouldOnlyAcceptCreditLimitBetween100And100000(){
+
+        var money = new Money("€", BigDecimal.valueOf(700));
+        var creditToTest3 = new CreditDTO(
+                "ES75210046", AccountStatus.ACTIVE, money, null, 0.2, BigDecimal.valueOf(700), BigDecimal.valueOf(1000000) );
+
+        assertThrows(Exception.class, ()-> mockMvc
+                .perform(post("/api/v1/accounts/credits/{id}", accountHolder.getId())
+                        .content(asJsonString(creditToTest3))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn());
+
+
+    }
+
+    @Test
+    void shouldOnlyAcceptInterestRateBetween0_1And0_2() {
+
+        var money = new Money("€", BigDecimal.valueOf(700));
+        var creditToTest3 = new CreditDTO(
+                "ES75210046", AccountStatus.ACTIVE, money, null, 0.05, BigDecimal.valueOf(700), BigDecimal.valueOf(10000) );
+
+        assertThrows(Exception.class, ()-> mockMvc
+                .perform(post("/api/v1/accounts/credits/{id}", accountHolder.getId())
+                        .content(asJsonString(creditToTest3))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn());
+
+
     }
     public static String asJsonString(final Object obj) {
         try {

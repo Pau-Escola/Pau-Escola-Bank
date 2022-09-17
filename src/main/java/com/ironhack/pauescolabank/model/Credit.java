@@ -8,10 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 
 @Entity
@@ -22,8 +25,11 @@ import java.math.BigDecimal;
 public class Credit extends Account {
     @Embedded
     private PenaltyFee penaltyFee;
+    @DecimalMax("0.2")
+    @DecimalMin("0.1")
     private Double interestRate;
     private BigDecimal moneyOwed;
+    @Range(min = 100, max = 100000)
     private BigDecimal creditLimit;
 
     public Credit() {

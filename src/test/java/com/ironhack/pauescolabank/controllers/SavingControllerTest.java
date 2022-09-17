@@ -1,6 +1,7 @@
 package com.ironhack.pauescolabank.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ironhack.pauescolabank.DTO.AccountHolderDTO;
 import com.ironhack.pauescolabank.DTO.SavingDTO;
 import com.ironhack.pauescolabank.embedded.Address;
 import com.ironhack.pauescolabank.embedded.Money;
@@ -24,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -69,7 +71,7 @@ class SavingControllerTest {
         savingToTest.setAccountStatus(AccountStatus.ACTIVE);
         savingToTest.setBalance(money);
         savingToTest.setOwner(accountHolderTest);
-        savingToTest.setInterestRate(4.5);
+        savingToTest.setInterestRate(0.35);
         account = savingRepository.save(savingToTest);
 
 
@@ -105,7 +107,7 @@ class SavingControllerTest {
     void create() throws Exception {
         var money = new Money("€", BigDecimal.valueOf(700));
         var savingToTest2 = new SavingDTO(
-                "ES75210046", AccountStatus.ACTIVE, money, null, 4.0, BigDecimal.valueOf(700) );
+                "ES75210046", AccountStatus.ACTIVE, money, null, 0.42, BigDecimal.valueOf(700) );
 
         var result = mockMvc
                 .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())
@@ -173,6 +175,40 @@ class SavingControllerTest {
                 .andReturn();
 
         assertTrue(result.getResponse().getContentAsString().contains("45000"));
+    }
+
+    @Test
+    void shouldOnlyAcceptMinimumBalanceBetween100And1000(){
+
+        var money = new Money("€", BigDecimal.valueOf(700));
+        var savingToTest3 = new SavingDTO(
+                "ES75210046", AccountStatus.ACTIVE, money, null, 0.28, BigDecimal.valueOf(50) );
+
+        assertThrows(Exception.class, ()-> mockMvc
+                .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())
+                        .content(asJsonString(savingToTest3))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn());
+
+
+    }
+
+    @Test
+    void shouldOnlyAcceptInterestRateBetween0_0025And0_5() {
+
+        var money = new Money("€", BigDecimal.valueOf(700));
+        var savingToTest3 = new SavingDTO(
+                "ES75210046", AccountStatus.ACTIVE, money, null, 0.8, BigDecimal.valueOf(150) );
+
+        assertThrows(Exception.class, ()-> mockMvc
+                .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())
+                        .content(asJsonString(savingToTest3))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn());
+
+
     }
     public static String asJsonString(final Object obj) {
         try {

@@ -8,6 +8,7 @@ import com.ironhack.pauescolabank.model.Saving;
 import com.ironhack.pauescolabank.services.SavingService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,7 @@ public class SavingController {
         return savingService.getById(id);
     }
     @PostMapping("/{id}")
-    public Saving create(@RequestBody SavingDTO savingDTO, @PathVariable Long id){
+    public Saving create(@RequestBody @Valid SavingDTO savingDTO, @PathVariable Long id){
 
         return savingService.save(savingDTO, id);
     }
