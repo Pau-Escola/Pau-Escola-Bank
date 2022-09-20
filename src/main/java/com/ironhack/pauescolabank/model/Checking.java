@@ -1,21 +1,18 @@
 package com.ironhack.pauescolabank.model;
 
 import com.ironhack.pauescolabank.DTO.CheckingDTO;
-import com.ironhack.pauescolabank.DTO.CreditDTO;
-import com.ironhack.pauescolabank.embedded.Fee;
 import com.ironhack.pauescolabank.embedded.Money;
 import com.ironhack.pauescolabank.embedded.MonthlyManteinanceFee;
 import com.ironhack.pauescolabank.embedded.PenaltyFee;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.List;
+
 @Entity
 
 @Getter
@@ -34,6 +31,13 @@ public class Checking extends Account {
     public Checking() {
     this.monthlyManteinanceFee = new MonthlyManteinanceFee();
     this.penaltyFee = new PenaltyFee();
+    }
+
+
+    @Override
+    public void setBalance(BigDecimal balance) {
+        if (this.getBalance() ==  null)super.balance=new Money(balance);
+        this.getBalance().setMoney(balance);
     }
 
     public Checking fromDTO(CheckingDTO checkingDTO, AccountHolder accountHolder){

@@ -1,6 +1,7 @@
 package com.ironhack.pauescolabank.model;
 
 import com.ironhack.pauescolabank.DTO.SavingDTO;
+import com.ironhack.pauescolabank.embedded.Money;
 import com.ironhack.pauescolabank.embedded.PenaltyFee;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import lombok.AllArgsConstructor;
@@ -47,15 +48,17 @@ public class Saving extends Account {
         saving.setSecretKey(savingDTO.getSecretKey());
         saving.setOwner(accountHolder);
         saving.setAccountStatus(savingDTO.getAccountStatus());
-        saving.updateBalance(savingDTO.getBalance().getMoney());
+        saving.updateBalance(savingDTO.getBalance());
         saving.setInterestRate(savingDTO.getInterestRate());
         saving.setMinimumBalance(savingDTO.getMinimumBalance());
 
         return saving;
     }
     public void updateBalance(BigDecimal bd){
+        if (this.getBalance() ==  null)super.balance=new Money(bd);
         int dayMultiplier = getDayCount(getBalance().getDateTracker().getDayOfYear());
         creditorNumber = creditorNumber.add(bd.multiply(BigDecimal.valueOf(dayMultiplier)));
+
         getBalance().setMoney(bd);
     }
 
@@ -71,6 +74,12 @@ public class Saving extends Account {
         getBalance().setDateTracker(newTimeTracker);
         return count;
 
+    }
+
+    @Override
+    public void setBalance(BigDecimal balance) {
+        if (this.getBalance() ==  null)super.balance=new Money(balance);
+        this.getBalance().setMoney(balance);
     }
 
     @Override

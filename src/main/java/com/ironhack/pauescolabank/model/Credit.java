@@ -50,6 +50,12 @@ public class Credit extends Account {
     }
 
     @Override
+    public void setBalance(BigDecimal balance) {
+        if (this.getBalance() ==  null)super.balance=new Money(balance);
+        this.getBalance().setMoney(balance);
+    }
+
+    @Override
     public void doMaintenance() {
 
     }

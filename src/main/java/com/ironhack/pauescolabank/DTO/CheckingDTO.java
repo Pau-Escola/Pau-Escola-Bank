@@ -29,7 +29,7 @@ public class CheckingDTO extends AccountDTO {
             String secretKey,
             Long owner_id,
             AccountStatus accountStatus,
-            Money balance,
+            BigDecimal balance,
             PenaltyFee penaltyFee,
             MonthlyManteinanceFee monthlyManteinanceFee,
             BigDecimal minimumBalance) {
@@ -42,7 +42,7 @@ public class CheckingDTO extends AccountDTO {
     public CheckingDTO(
             String secretKey,
             AccountStatus accountStatus,
-            Money balance,
+            BigDecimal balance,
             PenaltyFee penaltyFee,
             MonthlyManteinanceFee monthlyManteinanceFee,
             BigDecimal minimumBalance) {
@@ -58,7 +58,7 @@ public class CheckingDTO extends AccountDTO {
                 checking.getSecretKey(),
                 checking.getOwner().getId(),
                 checking.getAccountStatus(),
-                checking.getBalance(),
+                checking.getBalance().getMoney(),
                 checking.getPenaltyFee(),
                 checking.getMonthlyManteinanceFee(),
                 checking.getMinimumBalance()

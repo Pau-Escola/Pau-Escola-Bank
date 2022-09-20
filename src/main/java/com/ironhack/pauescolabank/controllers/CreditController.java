@@ -10,6 +10,7 @@ import com.ironhack.pauescolabank.services.CreditService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -52,7 +53,7 @@ public class CreditController {
     }
     @PatchMapping("/update_balance/{id}")
     public CreditDTO updateBalance(@PathVariable Long id,
-                                    @RequestBody Money money){
+                                    @RequestBody BigDecimal money){
         return creditService.updateBalance(id, money);
     }
 }

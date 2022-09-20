@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 
 @NoArgsConstructor
 @Getter
@@ -19,9 +21,9 @@ public abstract class AccountDTO {
     private String secretKey;
     private Long owner_id;
     private AccountStatus accountStatus;
-    private Money balance;
+    private BigDecimal balance;
 
-    public AccountDTO(String secretKey, AccountStatus accountStatus, Money balance) {
+    public AccountDTO(String secretKey, AccountStatus accountStatus, BigDecimal balance) {
         this.secretKey = secretKey;
         this.accountStatus = accountStatus;
         this.balance = balance;

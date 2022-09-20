@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -32,7 +33,7 @@ import java.time.Instant;
     @Enumerated
     private AccountStatus accountStatus;
     @Embedded
-    private Money balance;
+    protected Money balance;
     @OneToOne
     private HistoryLog log;
    @CreationTimestamp
@@ -40,6 +41,9 @@ import java.time.Instant;
    @UpdateTimestamp
    private Instant lastUpdateTime;
 
+    public abstract void setBalance(BigDecimal balance);
+
     abstract public void doMaintenance();
+
 
 }

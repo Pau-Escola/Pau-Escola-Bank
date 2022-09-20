@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -61,7 +62,7 @@ public class SavingService {
         return savingDTO.fromEntity(savingRepository.save(saving));
     }
 
-    public SavingDTO updateBalance(Long id, Money balance) {
+    public SavingDTO updateBalance(Long id, BigDecimal balance) {
         Saving saving = savingRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "There's no Saving Account with id: " + id));
@@ -76,10 +77,6 @@ public class SavingService {
                         "There's no Saving Account with id " + id ));
         if(saving.getOwner() != null)
             savingToUpdate.setOwner(saving.getOwner());
-        if(saving.getAccountStatus() != null)
-            savingToUpdate.setAccountStatus(saving.getAccountStatus());
-        if(saving.getBalance() != null)
-            savingToUpdate.setBalance(saving.getBalance());
         if(saving.getInterestRate() != null)
             savingToUpdate.setInterestRate(saving.getInterestRate());
         if(saving.getMinimumBalance() != null)

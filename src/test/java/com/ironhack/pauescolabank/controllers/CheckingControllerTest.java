@@ -65,11 +65,10 @@ class CheckingControllerTest {
                 LocalDate.of(2000,03,23),
                 addressTest, "test@gmail.com", null);
         accountHolder = accountHolderRepository.save(accountHolderTest);
-        var money = new Money("€", BigDecimal.valueOf(700));
         var checkingToTest = new Checking();
         checkingToTest.setSecretKey("ES7521004586");
         checkingToTest.setAccountStatus(AccountStatus.ACTIVE);
-        checkingToTest.setBalance(money);
+        checkingToTest.setBalance(BigDecimal.valueOf(700));
         checkingToTest.setOwner(accountHolderTest);
         account = checkingRepository.save(checkingToTest);
 
@@ -104,9 +103,9 @@ class CheckingControllerTest {
 
     @Test
     void create() throws Exception {
-        var money = new Money("€", BigDecimal.valueOf(700));
+
         var checkingToTest2 = new CheckingDTO(
-                "ES75210046", AccountStatus.ACTIVE, money, null, null, BigDecimal.valueOf(700) );
+                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, null, BigDecimal.valueOf(700) );
 
         var result = mockMvc
                 .perform(post("/api/v1/accounts/checkings/{id}", accountHolder.getId())
@@ -129,24 +128,8 @@ class CheckingControllerTest {
         assertTrue(result.getResponse().getContentAsString().contains("removed"));
     }
 
-    @Test
-    void updateAll() throws Exception {
-        var money = new Money("€", BigDecimal.valueOf(700));
-        var checkingToTest2 = new Checking();
-        checkingToTest2.setSecretKey("ES210046");
-        checkingToTest2.setAccountStatus(AccountStatus.FROZEN);
-        checkingToTest2.setBalance(money);
+    //todo lupdateall sha desborrar
 
-        var result = mockMvc
-                .perform(put("/api/v1/accounts/checkings/edit_whole/{id}", account.getId())
-                        .content(asJsonString(checkingToTest2))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()) // check status code 200
-                .andReturn();
-
-        assertTrue(result.getResponse().getContentAsString().contains("FROZEN"));
-    }
 
     @Test
     void updateStatus() throws Exception {
@@ -164,7 +147,7 @@ class CheckingControllerTest {
 
     @Test
     void updateBalance() throws Exception {
-        var balanceTotest = new Money("$",BigDecimal.valueOf(45000));
+        var balanceTotest = BigDecimal.valueOf(45000);
         var result = mockMvc
                 .perform(patch("/api/v1/accounts/checkings/update_balance/{id}", account.getId())
                         .content(asJsonString(balanceTotest))

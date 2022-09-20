@@ -32,7 +32,7 @@ public class SavingDTO extends AccountDTO {
             String secretKey,
             Long owner_id,
             AccountStatus accountStatus,
-            Money balance,
+            BigDecimal balance,
             PenaltyFee penaltyFee,
             double interestRate,
             BigDecimal minimumBalance) {
@@ -45,7 +45,7 @@ public class SavingDTO extends AccountDTO {
     public SavingDTO(
             String secretKey,
             AccountStatus accountStatus,
-            Money balance,
+            BigDecimal balance,
             PenaltyFee penaltyFee,
             double interestRate,
             BigDecimal minimumBalance) {
@@ -61,7 +61,7 @@ public class SavingDTO extends AccountDTO {
                 saving.getSecretKey(),
                 saving.getOwner().getId(),
                 saving.getAccountStatus(),
-                saving.getBalance(),
+                saving.getBalance().getMoney(),
                 saving.getPenaltyFee(),
                 saving.getInterestRate(),
                 saving.getMinimumBalance()

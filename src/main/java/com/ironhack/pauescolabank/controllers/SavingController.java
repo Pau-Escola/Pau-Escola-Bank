@@ -9,6 +9,7 @@ import com.ironhack.pauescolabank.services.SavingService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -52,7 +53,7 @@ public class SavingController {
     }
     @PatchMapping("/update_balance/{id}")
     public SavingDTO updateBalance(@PathVariable Long id,
-                                    @RequestBody Money money){
+                                    @RequestBody BigDecimal money){
         return savingService.updateBalance(id, money);
     }
 }

@@ -14,12 +14,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class Money {
-    private String currency;
+    private final String currency = "€";
     private BigDecimal money;
     private LocalDate dateTracker;
 
-    public Money(String currency, BigDecimal money) {
-        this.currency = currency;
+    public Money(BigDecimal money) {
         this.money = money;
         this.dateTracker = LocalDate.now();
     }

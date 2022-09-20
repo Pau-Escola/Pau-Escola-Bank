@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -57,7 +58,7 @@ public class CheckingService {
         return checkingDTO.fromEntity(checkingRepository.save(checking));
     }
 
-    public CheckingDTO updateBalance(Long id, Money balance) {
+    public CheckingDTO updateBalance(Long id, BigDecimal balance) {
         Checking checking = checkingRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "There's no Checking Account with id: " + id));
@@ -72,10 +73,7 @@ public class CheckingService {
                             "There's no Checking Account with id " + id ));
             if(checking.getOwner() != null)
                 checkingToUpdate.setOwner(checking.getOwner());
-            if(checking.getAccountStatus() != null)
-                checkingToUpdate.setAccountStatus(checking.getAccountStatus());
-            if(checking.getBalance() != null)
-                checkingToUpdate.setBalance(checking.getBalance());
+
 
 
             return checkingRepository.save(checkingToUpdate);

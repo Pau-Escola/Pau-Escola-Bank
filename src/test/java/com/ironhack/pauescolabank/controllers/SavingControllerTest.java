@@ -65,11 +65,10 @@ class SavingControllerTest {
                 LocalDate.of(2000,03,23),
                 addressTest, "test@gmail.com", null);
         accountHolder = accountHolderRepository.save(accountHolderTest);
-        var money = new Money("€", BigDecimal.valueOf(700));
         var savingToTest = new Saving();
         savingToTest.setSecretKey("ES7521004586");
         savingToTest.setAccountStatus(AccountStatus.ACTIVE);
-        savingToTest.setBalance(money);
+        savingToTest.setBalance(BigDecimal.valueOf(700));
         savingToTest.setOwner(accountHolderTest);
         savingToTest.setInterestRate(0.35);
         account = savingRepository.save(savingToTest);
@@ -105,9 +104,9 @@ class SavingControllerTest {
 
     @Test
     void create() throws Exception {
-        var money = new Money("€", BigDecimal.valueOf(700));
+
         var savingToTest2 = new SavingDTO(
-                "ES75210046", AccountStatus.ACTIVE, money, null, 0.42, BigDecimal.valueOf(700) );
+                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, 0.42, BigDecimal.valueOf(700) );
 
         var result = mockMvc
                 .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())
@@ -130,24 +129,6 @@ class SavingControllerTest {
         assertTrue(result.getResponse().getContentAsString().contains("removed"));
     }
 
-    @Test
-    void updateAll() throws Exception {
-        var money = new Money("€", BigDecimal.valueOf(700));
-        var savingToTest2 = new Saving();
-        savingToTest2.setSecretKey("ES210046");
-        savingToTest2.setAccountStatus(AccountStatus.FROZEN);
-        savingToTest2.setBalance(money);
-
-        var result = mockMvc
-                .perform(put("/api/v1/accounts/savings/edit_whole/{id}", account.getId())
-                        .content(asJsonString(savingToTest2))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()) // check status code 200
-                .andReturn();
-
-        assertTrue(result.getResponse().getContentAsString().contains("FROZEN"));
-    }
 
     @Test
     void updateStatus() throws Exception {
@@ -165,7 +146,7 @@ class SavingControllerTest {
 
     @Test
     void updateBalance() throws Exception {
-        var balanceTotest = new Money("$",BigDecimal.valueOf(45000));
+        var balanceTotest = BigDecimal.valueOf(45000);
         var result = mockMvc
                 .perform(patch("/api/v1/accounts/savings/update_balance/{id}", account.getId())
                         .content(asJsonString(balanceTotest))
@@ -180,9 +161,9 @@ class SavingControllerTest {
     @Test
     void shouldOnlyAcceptMinimumBalanceBetween100And1000(){
 
-        var money = new Money("€", BigDecimal.valueOf(700));
+
         var savingToTest3 = new SavingDTO(
-                "ES75210046", AccountStatus.ACTIVE, money, null, 0.28, BigDecimal.valueOf(50) );
+                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, 0.28, BigDecimal.valueOf(50) );
 
         assertThrows(Exception.class, ()-> mockMvc
                 .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())
@@ -197,9 +178,9 @@ class SavingControllerTest {
     @Test
     void shouldOnlyAcceptInterestRateBetween0_0025And0_5() {
 
-        var money = new Money("€", BigDecimal.valueOf(700));
+
         var savingToTest3 = new SavingDTO(
-                "ES75210046", AccountStatus.ACTIVE, money, null, 0.8, BigDecimal.valueOf(150) );
+                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, 0.8, BigDecimal.valueOf(150) );
 
         assertThrows(Exception.class, ()-> mockMvc
                 .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())

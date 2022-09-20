@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -60,7 +61,7 @@ public class CreditService {
         return creditDTO.fromEntity(creditRepository.save(credit));
     }
 
-    public CreditDTO updateBalance(Long id, Money balance) {
+    public CreditDTO updateBalance(Long id, BigDecimal balance) {
         Credit credit = creditRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "There's no Credit Account with id: " + id));
@@ -75,12 +76,7 @@ public class CreditService {
                         "There's no Credit Account with id " + id));
         if (credit.getOwner() != null)
             creditToUpdate.setOwner(credit.getOwner());
-        if (credit.getAccountStatus() != null)
-            creditToUpdate.setAccountStatus(credit.getAccountStatus());
-        if (credit.getBalance() != null)
-            creditToUpdate.setBalance(credit.getBalance());
-        if (credit.getPenaltyFee() != null)
-            creditToUpdate.setPenaltyFee(credit.getPenaltyFee());
+
         if (credit.getInterestRate() != null)
             creditToUpdate.setInterestRate(credit.getInterestRate());
         if (credit.getMoneyOwed() != null)
