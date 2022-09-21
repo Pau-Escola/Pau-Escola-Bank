@@ -22,12 +22,12 @@ public class SavingController {
     }
 
     @GetMapping
-    public List<Saving> getAll(){
+    public List<SavingDTO> getAll(){
         return savingService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Saving getById(@PathVariable Long id) {
+    public SavingDTO getById(@PathVariable Long id) {
         return savingService.getById(id);
     }
     @PostMapping("/{id}")

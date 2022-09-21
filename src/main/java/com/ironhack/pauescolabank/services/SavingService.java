@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,8 +30,14 @@ public class SavingService {
 
     }
 
-    public List<Saving> findAll() {
-        return savingRepository.findAll();
+    public List<SavingDTO> findAll() {
+        var accountsFound= savingRepository.findAll();
+        var accountsDTO = new ArrayList<SavingDTO>();
+        for(Saving saving: accountsFound){
+            var accountDTO = new SavingDTO();
+            accountsDTO.add(accountDTO.fromEntity(saving));
+        }
+        return accountsDTO ;
     }
 
     public Saving save(SavingDTO savingDTO, Long id) {
@@ -47,10 +54,12 @@ public class SavingService {
         return "Saving Account with id: " + id + " has been removed from the database";
     }
 
-    public Saving getById(Long id) {
-        return savingRepository.findById(id)
+    public SavingDTO getById(Long id) {
+        var savingToConvert = savingRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "There's no Saving Account with id: " + id));
+        var savingDTO = new SavingDTO();
+        return savingDTO.fromEntity(savingToConvert);
     }
 
     public SavingDTO updateStatus(Long id, AccountStatus status) {
