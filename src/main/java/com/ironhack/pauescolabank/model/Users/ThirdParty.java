@@ -1,7 +1,6 @@
 package com.ironhack.pauescolabank.model.Users;
 
 import com.ironhack.pauescolabank.DTO.ThirdPartyDTO;
-import com.ironhack.pauescolabank.model.Users.User;
 import com.ironhack.pauescolabank.utilities.ClientAccountJsonFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +22,7 @@ public class ThirdParty extends User {
     public ThirdParty fromDTO(ThirdPartyDTO thirdPartyDTO){
         ClientAccountJsonFormatter clientAccountJsonFormatter = new ClientAccountJsonFormatter();
         ThirdParty thirdParty = new ThirdParty();
-        thirdParty.setName(thirdPartyDTO.getName());
+        thirdParty.setFirstName(thirdPartyDTO.getName());
         thirdParty.setPassword(thirdPartyDTO.getPassword());
         thirdParty.setClientAccountJson(clientAccountJsonFormatter.toEntity(thirdPartyDTO.getClientAccountJson()));
 

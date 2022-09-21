@@ -29,6 +29,10 @@ public class AccountHolderService {
         return accountHolderRepository.save(accountHolder.fromDTO(accountHolderDTO));
     }
 
+    public AccountHolder save(AccountHolder accountHolder) {
+        return accountHolderRepository.save(accountHolder);
+    }
+
     public String delete(Long id) {
         accountHolderRepository.delete(
                 accountHolderRepository.findById(id).
@@ -51,6 +55,16 @@ public class AccountHolderService {
         accountHolder.setAddress(address);
         var accountHolderDTO = new AccountHolderDTO();
         return accountHolderDTO.fromEntity(accountHolderRepository.save(accountHolder));
+    }
+
+    public AccountHolder get(String keycloakId) {
+        for (AccountHolder accountHolder : accountHolderRepository.findAll()) {
+            if (accountHolder.getKeycloakId().equals(keycloakId)) {
+                return accountHolder;
+            }
+
+        }
+        return null;
     }
 
     /*public AccountHolderDTO addAccount(Long user_id, Long account_id) {

@@ -9,10 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Email;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -24,7 +22,10 @@ public abstract class User {
     @Id
     @GeneratedValue
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
+    @Email
+    private String email;
     private String password;
     @OneToMany
     private List<HistoryLog> logHistory;
@@ -35,8 +36,12 @@ public abstract class User {
     @OneToMany
     private List<Order> pendingOrders;
 
-    public User(String name, String password) {
-        this.name = name;
+    private String keycloakId;
+
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.password = password;
     }
 }

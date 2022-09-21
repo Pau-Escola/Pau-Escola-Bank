@@ -1,14 +1,10 @@
 package com.ironhack.pauescolabank.DTO;
 
-import com.ironhack.pauescolabank.embedded.Address;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
-import com.ironhack.pauescolabank.model.Users.Admin;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
@@ -16,9 +12,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AccountHolderDTO {
 
-    private String name;
-    private String password;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String password;
     private String country;
     private String city;
     private Integer zipCode;
@@ -30,7 +27,8 @@ public class AccountHolderDTO {
 
     public AccountHolderDTO fromEntity(AccountHolder accountHolder){
         var accountHolderDTO = new AccountHolderDTO();
-        accountHolderDTO.setName(accountHolder.getName());
+        accountHolderDTO.setFirstName(accountHolder.getFirstName());
+        accountHolderDTO.setLastName(accountHolder.getLastName());
         accountHolderDTO.setPassword(accountHolder.getPassword());
         accountHolderDTO.setEmail(accountHolder.getEmail());
         accountHolderDTO.setCountry(accountHolder.getAddress().getCountry());

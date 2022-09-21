@@ -21,7 +21,7 @@ public class AdminDTO {
 
     public AdminDTO fromEntity(Admin admin){
         AdminDTO adminDTO = new AdminDTO();
-        adminDTO.setName(admin.getName());
+        adminDTO.setName(admin.getFirstName());
         adminDTO.setPassword(admin.getPassword());
         adminDTO.setLogHistory(admin.getLogHistory());
         adminDTO.setPendingOrders(admin.getPendingOrders());
