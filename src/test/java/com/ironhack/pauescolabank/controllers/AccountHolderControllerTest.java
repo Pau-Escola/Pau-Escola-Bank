@@ -50,9 +50,9 @@ class AccountHolderControllerTest {
                 .webAppContextSetup(webApplicationContext)
                 .build();
         var addressTest = new Address("Spain", "Reus", 43204, "Raval de Robuster");
-        var accountHolderTest = new AccountHolder("Paulo", "Ew4X5rT",
+        var accountHolderTest = new AccountHolder("Paulo","Costas","test@gmail.com", "Ew4X5rT",
                 LocalDate.of(2000,03,23),
-                addressTest, "test@gmail.com", null);
+                addressTest, null);
 
         accountHolder = accountHolderRepository.save(accountHolderTest);
 
@@ -90,7 +90,7 @@ class AccountHolderControllerTest {
     void create() throws Exception {
 
         var newAccountHolder = new AccountHolderDTO(
-                "Roberto", "3xW5gJ@", "paulo@gmail.com",
+                "Roberto", "Carlos","paulo@gmail.com", "3xW5gJ@",
                 "Spain", "Reus", 43205, "Raval Robusto 25",
                 2000, 05, 21);
 
@@ -143,7 +143,7 @@ class AccountHolderControllerTest {
     void shouldOnlyAcceptOver18() throws Exception {
 
         var newAccountHolder = new AccountHolderDTO(
-                "Roberto", "3xW5gJ@", "paulo@gmail.com",
+                "Roberto", "Carlos","paulo@gmail.com", "3xW5gJ@",
                 "Spain", "Reus", 43205, "Raval Robusto 25",
                 2020, 05, 21);
 
@@ -161,7 +161,7 @@ class AccountHolderControllerTest {
     void shouldOnlyAcceptCorrectEmailFormat() throws Exception {
 
         var newAccountHolder = new AccountHolderDTO(
-                "Roberto", "3xW5gJ@", "paulogmail.com",
+                "Roberto", "Carlos","paulogmail.com", "3xW5gJ@",
                 "Spain", "Reus", 43205, "Raval Robusto 25",
                 2000, 05, 21);
 

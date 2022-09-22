@@ -64,10 +64,10 @@ class CreditControllerTest {
                 .webAppContextSetup(webApplicationContext)
                 .build();
         var addressTest = new Address("Spain", "Reus", 43204, "Raval de Robuster");
-        var accountHolderTest = new AccountHolder("Paulo", "Ew4X5rT",
+        var accountHolderTest = new AccountHolder("Paulo","Costas","test@gmail.com", "Ew4X5rT",
                 LocalDate.of(2000,03,23),
-                addressTest, "test@gmail.com", null);;
-        accountHolder = accountHolderRepository.save(accountHolderTest);
+                addressTest, null);
+                accountHolder = accountHolderRepository.save(accountHolderTest);
         var creditToTest = new Credit();
         creditToTest.setSecretKey("ES7521004586");
         creditToTest.setAccountStatus(AccountStatus.ACTIVE);
