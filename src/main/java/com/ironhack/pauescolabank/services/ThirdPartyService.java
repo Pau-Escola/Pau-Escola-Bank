@@ -1,6 +1,7 @@
 package com.ironhack.pauescolabank.services;
 
 import com.ironhack.pauescolabank.DTO.ThirdPartyDTO;
+import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import com.ironhack.pauescolabank.model.Users.ThirdParty;
 import com.ironhack.pauescolabank.repositories.ThirdPartyRepository;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,10 @@ public class ThirdPartyService {
         ThirdParty thirdParty = new ThirdParty();
         return thirdPartyRepository.save(thirdParty.fromDTO(thirdPartyDTO));
 
+    }
+
+    public ThirdParty save(ThirdParty thirdParty) {
+        return thirdPartyRepository.save(thirdParty);
     }
 
     public String delete(Long id) {

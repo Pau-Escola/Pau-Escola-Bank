@@ -41,10 +41,7 @@ public class SavingController {
         return savingService.delete(id);
     }
 
-    @PutMapping("/edit_whole/{id}")
-    public Saving updateAll(@PathVariable Long id, @RequestBody Saving saving){
-        return savingService.updateAll(id, saving);
-    }
+
 
     @PatchMapping("/update_status/{id}")
     public SavingDTO updateStatus(@PathVariable Long id,

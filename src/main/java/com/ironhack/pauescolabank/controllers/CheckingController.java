@@ -44,10 +44,7 @@ public class CheckingController  {
         return checkingService.delete(id);
     }
 
-    @PutMapping("/edit_whole/{id}")
-    public Checking updateAll(@PathVariable Long id, @RequestBody Checking checking){
-        return checkingService.updateAll(id, checking);
-    }
+
 
     @PatchMapping("/update_status/{id}")
     public CheckingDTO updateStatus(@PathVariable Long id,

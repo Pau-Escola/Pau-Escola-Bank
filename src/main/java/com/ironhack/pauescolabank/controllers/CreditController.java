@@ -41,10 +41,7 @@ public class CreditController {
         return creditService.delete(id);
     }
 
-    @PutMapping("/edit_whole/{id}")
-    public Credit updateAll(@PathVariable Long id, @RequestBody Credit credit){
-        return creditService.updateAll(id, credit);
-    }
+
 
     @PatchMapping("/update_status/{id}")
     public CreditDTO updateStatus(@PathVariable Long id,

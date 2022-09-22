@@ -27,20 +27,7 @@ public class AccountHolderController {
     public AccountHolder getById(@PathVariable Long id) {
         return accountHolderService.getById(id);
     }
-    @PostMapping
-    public AccountHolder create(@RequestBody @Valid AccountHolderDTO accountHolderDTO){
-        return accountHolderService.save(accountHolderDTO);
-    }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id){
-        return accountHolderService.delete(id);
-    }
-
-   /* @PutMapping("/edit_whole/{id}")
-    public AccountHolder updateAll(@PathVariable Long id, @RequestBody AccountHolder accountHolder){
-        return accountHolderService.updateAll(id, accountHolder);
-    }*/
 
     @PatchMapping("/update_address/{id}")
     public AccountHolderDTO updateAddress(@PathVariable Long id,
