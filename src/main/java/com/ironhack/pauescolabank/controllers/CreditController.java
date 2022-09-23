@@ -22,6 +22,7 @@ public class CreditController {
         this.creditService = creditService;
     }
 
+
     @GetMapping
     public List<Credit> getAll(){
         return creditService.findAll();
@@ -35,7 +36,6 @@ public class CreditController {
     public Credit create(@RequestBody @Valid CreditDTO creditDTO, @PathVariable Long id){
         return creditService.save(creditDTO, id);
     }
-
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id){
         return creditService.delete(id);

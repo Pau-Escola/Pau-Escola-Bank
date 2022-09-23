@@ -9,6 +9,7 @@ import com.ironhack.pauescolabank.model.Users.Admin;
 import com.ironhack.pauescolabank.services.CheckingService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
@@ -33,6 +34,7 @@ public class CheckingController  {
     public Checking getById(@PathVariable Long id) {
         return checkingService.getById(id);
     }
+
 
     @PostMapping("/{id}")
     public Checking create(@RequestBody @Valid CheckingDTO checkingDTO, @PathVariable Long id) {

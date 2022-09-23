@@ -62,20 +62,23 @@ public class UserController {
 
     }
 
-    @RolesAllowed({"admin"})
+    @RolesAllowed("admin")
     @PostMapping(value = "/create/thirdparty")
     public ResponseEntity<?> createThirdParty(@RequestBody CreateThirdpartyRequest user) {
         Response createdResponse = kcAdminClient.createKeycloakThirdPartyUser(user);
         return ResponseEntity.status(createdResponse.getStatus()).build();
 
     }
-
+    @RolesAllowed("admin")
     @DeleteMapping("/delete/admin/{id}")
     public String deleteAdmin(@PathVariable Long id){return adminService.delete(id);}
+
+    @RolesAllowed({"admin","moderator"})
     @DeleteMapping("/delete/accountholder/{id}")
     public String deleteAH(@PathVariable Long id){
         return accountHolderService.delete(id);
     }
+    @RolesAllowed("admin")
     @DeleteMapping("/delete/thirdparty/{id}")
     public String deleteTP(@PathVariable Long id){
         return thirdPartyService.delete(id);

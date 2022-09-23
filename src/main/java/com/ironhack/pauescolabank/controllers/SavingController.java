@@ -35,12 +35,10 @@ public class SavingController {
 
         return savingService.save(savingDTO, id);
     }
-
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id){
         return savingService.delete(id);
     }
-
 
 
     @PatchMapping("/update_status/{id}")

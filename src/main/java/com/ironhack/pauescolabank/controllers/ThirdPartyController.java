@@ -24,13 +24,5 @@ public class ThirdPartyController {
     public ThirdParty getById(@PathVariable Long id) {
         return thirdPartyService.getById(id);
     }
-    @PostMapping
-    public ThirdParty create(@RequestBody ThirdPartyDTO thirdPartyDTO){
-        return thirdPartyService.save(thirdPartyDTO);
-    }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id){
-        return thirdPartyService.delete(id);
-    }
 }

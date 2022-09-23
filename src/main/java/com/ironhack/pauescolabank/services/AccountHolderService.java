@@ -2,6 +2,7 @@ package com.ironhack.pauescolabank.services;
 
 import com.ironhack.pauescolabank.DTO.AccountHolderDTO;
 import com.ironhack.pauescolabank.embedded.Address;
+import com.ironhack.pauescolabank.model.Account;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import com.ironhack.pauescolabank.repositories.AccountHolderRepository;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,30 @@ public class AccountHolderService {
         }
         return null;
     }
+
+    public List<Account> getAccounts(String keycloakId){
+        var userTocheck = new AccountHolder();
+        for (AccountHolder accountHolder : accountHolderRepository.findAll()) {
+            if (accountHolder.getKeycloakId().equals(keycloakId)) {
+                userTocheck = accountHolder;
+            }
+
+        }
+        return userTocheck.getAccounts();
+    }
+//todo shan de fer els metodes to string de account holders i...de tot basicament
+    public AccountHolder updateAddress(String keycloakId, Address newAddress) {
+        for (AccountHolder accountHolder : accountHolderRepository.findAll()) {
+            if (accountHolder.getKeycloakId().equals(keycloakId)) {
+                 accountHolder.setAddress(newAddress);
+                 return accountHolder;
+            }
+
+        }
+        return null;
+    }
+
+
 
     /*public AccountHolderDTO addAccount(Long user_id, Long account_id) {
         var accountHolder = accountHolderRepository.findById(user_id)

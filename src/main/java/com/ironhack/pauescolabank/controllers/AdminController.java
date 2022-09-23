@@ -9,6 +9,7 @@ import com.ironhack.pauescolabank.services.AccountHolderService;
 import com.ironhack.pauescolabank.services.AdminService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -20,25 +21,19 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+    @RolesAllowed({"admin", "moderator"})
     @GetMapping
     public List<Admin> getAll(){
         return adminService.findAll();
     }
 
+
+    @RolesAllowed({"admin", "moderator"})
     @GetMapping("/{id}")
     public Admin getById(@PathVariable Long id){
         return adminService.findById(id);
     }
 
-    @PostMapping
-    public Admin create(@RequestBody Admin admin){
-        return adminService.save(admin);
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id){
-        return adminService.delete(id);
-    }
 
     /*@PutMapping("/edit_whole/{id}")
     public Admin updatePut(@PathVariable Long id, @RequestBody Admin admin){
