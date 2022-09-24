@@ -106,7 +106,7 @@ class SavingControllerTest {
     void create() throws Exception {
 
         var savingToTest2 = new SavingDTO(
-                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, 0.42, BigDecimal.valueOf(700) );
+                "ES75210046",  BigDecimal.valueOf(700), 0.42, BigDecimal.valueOf(700) );
 
         var result = mockMvc
                 .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())
@@ -163,7 +163,7 @@ class SavingControllerTest {
 
 
         var savingToTest3 = new SavingDTO(
-                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, 0.28, BigDecimal.valueOf(50) );
+                "ES75210046", BigDecimal.valueOf(700), 0.28, BigDecimal.valueOf(50) );
 
         assertThrows(Exception.class, ()-> mockMvc
                 .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())
@@ -180,7 +180,7 @@ class SavingControllerTest {
 
 
         var savingToTest3 = new SavingDTO(
-                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, 0.8, BigDecimal.valueOf(150) );
+                "ES75210046", BigDecimal.valueOf(700), 0.8, BigDecimal.valueOf(150) );
 
         assertThrows(Exception.class, ()-> mockMvc
                 .perform(post("/api/v1/accounts/savings/{id}", accountHolder.getId())

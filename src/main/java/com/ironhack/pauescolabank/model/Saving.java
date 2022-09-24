@@ -3,6 +3,7 @@ package com.ironhack.pauescolabank.model;
 import com.ironhack.pauescolabank.DTO.SavingDTO;
 import com.ironhack.pauescolabank.embedded.Money;
 import com.ironhack.pauescolabank.embedded.PenaltyFee;
+import com.ironhack.pauescolabank.enums.AccountStatus;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,11 +48,11 @@ public class Saving extends Account {
         Saving saving = new Saving();
         saving.setSecretKey(savingDTO.getSecretKey());
         saving.setOwner(accountHolder);
-        saving.setAccountStatus(savingDTO.getAccountStatus());
+        saving.setAccountStatus(AccountStatus.ACTIVE);
         saving.updateBalance(savingDTO.getBalance());
         saving.setInterestRate(savingDTO.getInterestRate());
         saving.setMinimumBalance(savingDTO.getMinimumBalance());
-
+        accountHolder.addToAccountList(saving);
         return saving;
     }
     public void updateBalance(BigDecimal bd){

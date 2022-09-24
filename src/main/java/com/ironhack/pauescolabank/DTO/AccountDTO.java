@@ -28,4 +28,9 @@ public abstract class AccountDTO {
         this.accountStatus = accountStatus;
         this.balance = balance;
     }
+
+    public AccountDTO(String secretKey, BigDecimal balance) {
+        this.secretKey = secretKey;
+        this.balance = balance;
+    }
 }

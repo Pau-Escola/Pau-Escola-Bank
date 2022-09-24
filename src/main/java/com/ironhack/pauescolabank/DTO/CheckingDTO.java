@@ -41,16 +41,14 @@ public class CheckingDTO extends AccountDTO {
 
     public CheckingDTO(
             String secretKey,
-            AccountStatus accountStatus,
-            BigDecimal balance,
-            PenaltyFee penaltyFee,
-            MonthlyManteinanceFee monthlyManteinanceFee,
-            BigDecimal minimumBalance) {
-        super(secretKey, accountStatus, balance);
-        setPenaltyFee(penaltyFee);
-        setMonthlyManteinanceFee(monthlyManteinanceFee);
-        setMinimumBalance(minimumBalance);
+            BigDecimal balance
+            ) {
+        super(secretKey, balance);
+        setAccountStatus(AccountStatus.ACTIVE);
+
     }
+
+
 
 
     public CheckingDTO fromEntity(Checking checking) {

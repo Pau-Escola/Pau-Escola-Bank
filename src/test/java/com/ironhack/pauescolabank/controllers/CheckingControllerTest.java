@@ -105,7 +105,7 @@ class CheckingControllerTest {
     void create() throws Exception {
 
         var checkingToTest2 = new CheckingDTO(
-                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, null, BigDecimal.valueOf(700) );
+                "ES75210046", BigDecimal.valueOf(700));
 
         var result = mockMvc
                 .perform(post("/api/v1/accounts/checkings/{id}", accountHolder.getId())

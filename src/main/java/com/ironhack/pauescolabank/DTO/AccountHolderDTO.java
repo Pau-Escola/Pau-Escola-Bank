@@ -1,10 +1,13 @@
 package com.ironhack.pauescolabank.DTO;
 
+import com.ironhack.pauescolabank.model.Account;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -23,6 +26,7 @@ public class AccountHolderDTO {
     private int yearOfBirth;
     private int monthOfBirth;
     private int dayOfBirth;
+    private List<Account> accounts;
 
 
     public AccountHolderDTO fromEntity(AccountHolder accountHolder){
@@ -38,6 +42,7 @@ public class AccountHolderDTO {
         accountHolderDTO.setYearOfBirth(accountHolder.getBirthdate().getYear());
         accountHolderDTO.setMonthOfBirth(accountHolder.getBirthdate().getMonthValue());
         accountHolderDTO.setDayOfBirth(accountHolder.getBirthdate().getDayOfMonth());
+        accountHolderDTO.setAccounts(accountHolder.getAccounts());
 
 
         return accountHolderDTO;

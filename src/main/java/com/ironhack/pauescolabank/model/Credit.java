@@ -3,6 +3,7 @@ package com.ironhack.pauescolabank.model;
 import com.ironhack.pauescolabank.DTO.CreditDTO;
 import com.ironhack.pauescolabank.embedded.Money;
 import com.ironhack.pauescolabank.embedded.PenaltyFee;
+import com.ironhack.pauescolabank.enums.AccountStatus;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,12 +41,12 @@ public class Credit extends Account {
         Credit credit = new Credit();
         credit.setSecretKey(creditDTO.getSecretKey());
         credit.setOwner(accountHolder);
-        credit.setAccountStatus(creditDTO.getAccountStatus());
+        credit.setAccountStatus(AccountStatus.ACTIVE);
         credit.setBalance(creditDTO.getBalance());
         credit.setInterestRate(creditDTO.getInterestRate());
         credit.setMoneyOwed(creditDTO.getMoneyOwed());
         credit.setCreditLimit(creditDTO.getCreditLimit());
-
+        accountHolder.addToAccountList(credit);
         return credit;
     }
 

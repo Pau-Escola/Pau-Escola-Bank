@@ -108,7 +108,7 @@ class CreditControllerTest {
     @Test
     void create() throws Exception {
         var creditToTest2 = new CreditDTO(
-                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, 0.2, BigDecimal.valueOf(700), BigDecimal.valueOf(100) );
+                "ES75210046",  BigDecimal.valueOf(700), 0.2, BigDecimal.valueOf(100) );
 
         var result = mockMvc
                 .perform(post("/api/v1/accounts/credits/{id}", accountHolder.getId())
@@ -165,7 +165,7 @@ class CreditControllerTest {
     void shouldOnlyAcceptCreditLimitBetween100And100000(){
 
         var creditToTest3 = new CreditDTO(
-                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, 0.2, BigDecimal.valueOf(700), BigDecimal.valueOf(1000000) );
+                "ES75210046", BigDecimal.valueOf(700),  0.2, BigDecimal.valueOf(1000000) );
 
         assertThrows(Exception.class, ()-> mockMvc
                 .perform(post("/api/v1/accounts/credits/{id}", accountHolder.getId())
@@ -182,7 +182,7 @@ class CreditControllerTest {
 
 
         var creditToTest3 = new CreditDTO(
-                "ES75210046", AccountStatus.ACTIVE, BigDecimal.valueOf(700), null, 0.05, BigDecimal.valueOf(700), BigDecimal.valueOf(10000) );
+                "ES75210046", BigDecimal.valueOf(700), 0.05,  BigDecimal.valueOf(10000) );
 
         assertThrows(Exception.class, ()-> mockMvc
                 .perform(post("/api/v1/accounts/credits/{id}", accountHolder.getId())

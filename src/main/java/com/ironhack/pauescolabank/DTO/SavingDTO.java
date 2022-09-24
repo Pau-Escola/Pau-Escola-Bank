@@ -44,12 +44,10 @@ public class SavingDTO extends AccountDTO {
 
     public SavingDTO(
             String secretKey,
-            AccountStatus accountStatus,
             BigDecimal balance,
-            PenaltyFee penaltyFee,
             double interestRate,
             BigDecimal minimumBalance) {
-        super(secretKey, accountStatus, balance);
+        super(secretKey,balance);
         setPenaltyFee(penaltyFee);
         setInterestRate(interestRate);
         setMinimumBalance(minimumBalance);

@@ -91,7 +91,7 @@ public class KeycloakAdminClientService {
             var addressToAdd = new Address(user.getCountry(), user.getCity(), user.getZipCode(),user.getStreet());
 
             var dateOfBirth = LocalDate.of(user.getYearOfBirth(),user.getMonthOfBirth(), user.getDayOfBirth());
-            var accountHolder = new AccountHolder(user.getFirstName(), user.getLastName(), user.getEmail(),user.getPassword(),dateOfBirth,addressToAdd,null);
+            var accountHolder = new AccountHolder(user.getFirstName(), user.getLastName(), kcUser.getUsername(), user.getPassword(),dateOfBirth,addressToAdd,null);
             accountHolder.setKeycloakId(createdUser.getId());
 
             var createdAccountHolder = accountHolderService.save(accountHolder); // simulate the call to store the ah to the db

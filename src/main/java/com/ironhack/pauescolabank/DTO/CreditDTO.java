@@ -44,17 +44,11 @@ public class CreditDTO extends AccountDTO {
 
     public CreditDTO(
             String secretKey,
-
-            AccountStatus accountStatus,
             BigDecimal balance,
-            PenaltyFee penaltyFee,
             double interestRate,
-            BigDecimal moneyOwed,
             BigDecimal creditLimit) {
-        super(secretKey, accountStatus, balance);
-        setPenaltyFee(penaltyFee);
+        super(secretKey,  balance);
         setInterestRate(interestRate);
-        setMoneyOwed(moneyOwed);
         setCreditLimit(creditLimit);
     }
 
