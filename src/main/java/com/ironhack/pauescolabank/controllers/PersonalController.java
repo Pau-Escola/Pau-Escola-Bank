@@ -4,6 +4,7 @@ import com.ironhack.pauescolabank.DTO.AccountHolderDTO;
 import com.ironhack.pauescolabank.embedded.Address;
 import com.ironhack.pauescolabank.model.Account;
 import com.ironhack.pauescolabank.model.Users.AccountHolder;
+import com.ironhack.pauescolabank.requests.TransferRequest;
 import com.ironhack.pauescolabank.services.AccountHolderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,5 +31,10 @@ public class PersonalController {
     @PatchMapping("/update_address")
     public AccountHolder updateAddress(Principal principal, @RequestBody Address address){
         return accountHolderService.updateAddress(principal.getName(), address);
+    }
+
+    @GetMapping("/transfer-money")
+    public String makeTransfer(Principal principal, @RequestBody TransferRequest transferRequest){
+        return accountHolderService.makeTransfer(transferRequest, principal.getName());
     }
 }

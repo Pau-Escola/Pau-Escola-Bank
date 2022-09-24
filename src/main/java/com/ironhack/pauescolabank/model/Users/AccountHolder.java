@@ -30,7 +30,6 @@ public class AccountHolder extends User {
     private Address address;
     private Double rating;
     @OneToMany
-    @JoinColumn(referencedColumnName = "account_list")
     private List<Account> accounts;
     @AssertTrue
     private boolean isOver18;
