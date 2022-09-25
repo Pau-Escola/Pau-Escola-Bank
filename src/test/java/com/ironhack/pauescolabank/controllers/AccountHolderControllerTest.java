@@ -92,7 +92,7 @@ class AccountHolderControllerTest {
         var newAccountHolder = new AccountHolderDTO(
                 "Roberto", "Carlos","paulo@gmail.com", "3xW5gJ@",
                 "Spain", "Reus", 43205, "Raval Robusto 25",
-                2000, 05, 21);
+                2000, 05, 21, null);
 
         var result = mockMvc
                 .perform(post("/api/v1/users/accountholders")
@@ -145,7 +145,7 @@ class AccountHolderControllerTest {
         var newAccountHolder = new AccountHolderDTO(
                 "Roberto", "Carlos","paulo@gmail.com", "3xW5gJ@",
                 "Spain", "Reus", 43205, "Raval Robusto 25",
-                2020, 05, 21);
+                2020, 05, 21,null);
 
         assertThrows(Exception.class, ()-> mockMvc
                 .perform(post("/api/v1/users/accountholders")
@@ -163,7 +163,7 @@ class AccountHolderControllerTest {
         var newAccountHolder = new AccountHolderDTO(
                 "Roberto", "Carlos","paulogmail.com", "3xW5gJ@",
                 "Spain", "Reus", 43205, "Raval Robusto 25",
-                2000, 05, 21);
+                2000, 05, 21, null);
 
         assertThrows(Exception.class, ()-> mockMvc
                 .perform(post("/api/v1/users/accountholders")
